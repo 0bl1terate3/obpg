@@ -752,6 +752,31 @@
   <label class="block text-xs text-slate-400 mb-1" for="generation-seed">Generation Seed (Optional):</label>
   <input type="text" id="generation-seed" placeholder="e.g., 42, chaos23" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs"/>
 </div>
+
+<div class="animated-divider mt-4 mb-3"></div>
+
+<!-- Punctuation Style -->
+<div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="punctuation-style">Punctuation Style:</label>
+    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="punctuation-style">
+        <option value="default">Default/AI Choice</option>
+        <option value="minimal">Minimal Punctuation</option>
+        <option value="standard">Standard Punctuation</option>
+        <option value="creative">Emphatic/Creative Punctuation</option>
+    </select>
+</div>
+
+<!-- Sentence Length Variation -->
+<div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="sentence-length-variation">Sentence Length Variation:</label>
+    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="sentence-length-variation">
+        <option value="default">Default/AI Choice</option>
+        <option value="mostly-short">Mostly Short Sentences</option>
+        <option value="mixed">Mix of Short & Long Sentences</option>
+        <option value="mostly-long">Mostly Long Sentences</option>
+    </select>
+</div>
+
 </div>
 <!-- Topics Tab -->
 <div class="tab-panel" id="tab-topics">
@@ -801,6 +826,21 @@ sports" rows="2"></textarea>
 <input class="bg-slate-800 border border-slate-600 rounded p-1 w-1/4 h-8" id="cluster-color-input" type="color" value="#22d3ee"/>
 <button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="create-cluster-btn">Create Cluster</button>
 </div>
+
+<div class="animated-divider mt-4 mb-3"></div>
+
+<!-- Topic Interaction Notes -->
+<div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="topic-interaction-notes">Topic Interaction Notes (Optional):</label>
+    <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="topic-interaction-notes" placeholder="e.g., Make Topic X the setup, Topic Y the punchline. Contrast Topic A and B." rows="2"></textarea>
+</div>
+
+<!-- Sub-theme Specification -->
+<div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="subtheme-specification">Sub-theme / Angle Specification (Optional):</label>
+    <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="subtheme-specification" placeholder="e.g., For 'Animals', focus on nocturnal. For 'Tech', emphasize outdated gadgets." rows="2"></textarea>
+</div>
+
 </div>
 </div>
 <!-- Content Tab -->
@@ -918,6 +958,53 @@ anime, k-pop" rows="2"></textarea>
 <label class="block text-xs text-slate-400 mb-1" for="excluded-words">Excluded Words:</label>
 <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="excluded-words" placeholder="Specific words to exclude" rows="2"></textarea>
 </div>
+
+<div class="animated-divider"></div>
+
+<!-- Part-of-Speech Control -->
+<div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-2">Part-of-Speech Guidance:</label>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+        <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
+            <input type="checkbox" id="pos-emphasize-adjectives" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded">
+            <label for="pos-emphasize-adjectives" class="cursor-pointer select-none">Emphasize Adjectives</label>
+        </div>
+        <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
+            <input type="checkbox" id="pos-minimize-adverbs" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded">
+            <label for="pos-minimize-adverbs" class="cursor-pointer select-none">Minimize Adverbs</label>
+        </div>
+        <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
+            <input type="checkbox" id="pos-ensure-strong-verbs" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded">
+            <label for="pos-ensure-strong-verbs" class="cursor-pointer select-none">Ensure Strong Verbs</label>
+        </div>
+    </div>
+</div>
+
+<!-- Narrative Structure Control -->
+<div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="narrative-structure">Narrative Structure:</label>
+    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="narrative-structure">
+        <option value="default">Default/Flexible</option>
+        <option value="setup-punchline">Standard Setup-Punchline</option>
+        <option value="observational-anecdote">Observational Anecdote</option>
+        <option value="abstract-surreal">Abstract/Surreal Flow</option>
+        <!-- Note: Question-Answer & Dialogue are already in Joke Structure, consider merging or specializing if kept -->
+    </select>
+</div>
+
+<!-- Constraint: No Rhetorical Questions -->
+<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="constraint-no-rhetorical">Disallow Rhetorical Questions</label>
+    <label class="switch"><input id="constraint-no-rhetorical" type="checkbox"/><span class="slider round"></span></label>
+</div>
+
+<!-- Constraint: Clear Subject -->
+<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="constraint-clear-subject">Ensure Clear Subject</label>
+    <label class="switch"><input id="constraint-clear-subject" type="checkbox"/><span class="slider round"></span></label>
+</div>
+
+
 <div class="animated-divider"></div> <!-- Animated Divider -->
 <div class="text-center mt-4">
 <button class="toggle-btn !text-xs !py-2 !px-4" id="clear-content-inputs-btn">Clear All Content Inputs</button>
@@ -1518,6 +1605,17 @@ ${povInstructions[pov]}
             if (params.conflictType) configBlock += `\n- **Primary Conflict:** ${params.conflictType}.`;
             if (params.generationSeed) configBlock += `\n- **Thematic Seed (for inspiration only):** ${params.generationSeed}.`;
 
+            // New General Style parameters from Generation Tab
+            if (params.punctuationStyle && params.punctuationStyle !== 'default') {
+                configBlock += `\n- **Punctuation Style:** Use ${params.punctuationStyle.replace('-', ' ')} punctuation.`;
+            }
+            if (params.sentenceLengthVariation && params.sentenceLengthVariation !== 'default') {
+                let variationText = params.sentenceLengthVariation.replace('-', ' ');
+                if (params.sentenceLengthVariation === 'mixed') variationText = "a mix of short and long sentences";
+                else variationText = params.sentenceLengthVariation.replace('-', ' ') + " sentences";
+                configBlock += `\n- **Sentence Lengths:** Prefer ${variationText}.`;
+            }
+
 
             // === Topics Tab Parameters ===
             if (params.topicPriorityMode) configBlock += `\n- **Topic Adherence:** ${params.topicPriorityMode}.`;
@@ -1525,6 +1623,9 @@ ${povInstructions[pov]}
             if (params.topicInfluence) configBlock += `\n- **Topic Influence:** ${topicInfluenceLabelsPrompt[params.topicInfluence] || 'strong focus'}.`;
             if (params.excludedTopics) configBlock += `\n- **Excluded Topics:** MUST NOT be about: ${params.excludedTopics}.`; // Already existed, ensure it's using passed param
             if (currentSelectedTopics.length > 0) configBlock += `\n- **General Topics:** Should incorporate: ${currentSelectedTopics.join(', ')}.`;
+
+            if (params.topicInteractionNotes) configBlock += `\n- **Topic Interaction Notes:** ${params.topicInteractionNotes}.`;
+            if (params.subthemeSpecification) configBlock += `\n- **Sub-theme Specifications:** ${params.subthemeSpecification}.`;
 
 
             // === Content Tab Parameters (Existing and New) ===
@@ -1555,6 +1656,23 @@ ${povInstructions[pov]}
             if (params.culturalContext) configBlock += `\n- **Cultural Context:** Must reference: "${params.culturalContext}".`;
             if (params.forbiddenConstraints) configBlock += `\n- **Forbidden Constraints:** MUST NOT mention: ${params.forbiddenConstraints}.`;
             if (params.excludedWords) configBlock += `\n- **Excluded Words:** MUST NOT contain: ${params.excludedWords}.`;
+
+            // New Content Tab Enhancements for Prompt
+            let posGuidance = [];
+            if (params.posEmphasizeAdjectives) posGuidance.push("Emphasize adjectives");
+            if (params.posEnsureStrongVerbs) posGuidance.push("Ensure strong verbs");
+            if (params.posMinimizeAdverbs) posGuidance.push("Minimize adverbs");
+            if (posGuidance.length > 0) configBlock += `\n- **Linguistic Style:** ${posGuidance.join('. ')}.`;
+
+            if (params.narrativeStructure && params.narrativeStructure !== 'default') {
+                configBlock += `\n- **Narrative Structure:** Follow a ${params.narrativeStructure.replace('-', ' ')} structure.`;
+            }
+            if (params.constraintNoRhetorical) {
+                configBlock += `\n- **Constraint:** Do not use rhetorical questions.`;
+            }
+            if (params.constraintClearSubject) {
+                configBlock += `\n- **Constraint:** The joke must have a clear and easily identifiable subject.`;
+            }
 
 
             // === Advanced Tab Parameters ===

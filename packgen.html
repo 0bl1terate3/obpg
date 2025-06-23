@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -657,125 +656,145 @@
 <label class="switch"><input id="avoid-repetition-toggle" type="checkbox"/><span class="slider round"></span></label>
 </div>
 <div class="animated-divider"></div>
-<!-- Additional Fine-Tuning Settings -->
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="sarcasm-level-slider">Sarcasm Level: <span class="font-bold text-cyan-400" id="sarcasm-level-value">Balanced</span></label>
-<input class="w-full slider-thumb" id="sarcasm-level-slider" max="5" min="1" type="range" value="3"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="realism-vs-surrealism">Realism vs. Surrealism:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="realism-vs-surrealism">
-<option value="balanced">Balanced</option>
-<option value="realistic">Grounded</option>
-<option value="surreal">Surreal</option>
-<option value="dreamlike">Dreamlike</option>
-</select>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="visual-imagery-slider">Visual Imagery Intensity: <span class="font-bold text-cyan-400" id="visual-imagery-value">3</span></label>
-<input class="w-full slider-thumb" id="visual-imagery-slider" max="5" min="1" type="range" value="3"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="logical-coherence-toggle">Logical Coherence:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="logical-coherence-toggle">
-<option value="auto">Auto</option>
-<option value="tight">Tightly coherent</option>
-<option value="loose">Loosely connected</option>
-<option value="chaotic">Intentionally incoherent</option>
-</select>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="exaggeration-mode">Exaggeration Mode:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="exaggeration-mode">
-<option value="mild">Mild</option>
-<option value="medium">Medium</option>
-<option value="over-the-top">Over the Top</option>
-<option value="absurd-max">Absurd Max</option>
-</select>
-</div>
 
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="theme-randomizer-toggle">Theme Randomizer</label>
-  <label class="switch">
-    <input id="theme-randomizer-toggle" type="checkbox"/>
-    <span class="slider round"></span>
-  </label>
+<!-- Master Toggle for Fine-Tuning Controls -->
+<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableFineTuningToggle">Enable Fine-Tuning Controls</label>
+    <label class="switch"><input id="enableFineTuningToggle" type="checkbox"/><span class="slider round"></span></label>
 </div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="noun-count">Preferred Noun Count:</label>
-  <input id="noun-count" type="number" min="1" max="50" value="" placeholder="AI Choice" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs" />
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="verb-density">Verb Density:</label>
-  <input type="range" id="verb-density" min="1" max="5" value="3" class="slider-thumb w-full"/>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="sentence-rhythm">Sentence Rhythm:</label>
-  <select id="sentence-rhythm" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1">
-    <option value="varied" selected>Varied</option>
-    <option value="short-punchy">Short & Punchy</option>
-    <option value="long-runons">Long Run-ons</option>
-    <option value="musical">Musical Flow</option>
-  </select>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="backstory-injection">Backstory Injection:</label>
-  <textarea id="backstory-injection" rows="2" placeholder="e.g., this character used to be a pro skater" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs"></textarea>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="emotion-arc">Emotion Arc:</label>
-  <select id="emotion-arc" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1">
-    <option value="neutral">Neutral</option>
-    <option value="rise-fall">Rise & Fall</option>
-    <option value="fall-rise">Fall then Rise</option>
-    <option value="volatile">Chaotic Mood Swings</option>
-  </select>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="shock-value">Shock Value: <span class="font-bold text-cyan-400" id="shock-value-label">3</span></label>
-  <input type="range" id="shock-value" min="1" max="5" value="3" class="slider-thumb w-full"/>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="callback-count">Number of Callbacks:</label>
-  <input type="number" id="callback-count" min="0" max="10" value="0" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs"/>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="conflict-type">Primary Conflict Type:</label>
-  <select id="conflict-type" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1">
-    <option value="internal">Internal (psychological)</option>
-    <option value="social">Social (drama, beef)</option>
-    <option value="absurdist">Absurdist (nonsense)</option>
-    <option value="physical">Physical (slapstick)</option>
-    <option value="cosmic">Cosmic (existential/AI/God)</option>
-  </select>
-</div>
-<div class="mb-3">
-  <label class="block text-xs text-slate-400 mb-1" for="generation-seed">Generation Seed (Optional):</label>
-  <input type="text" id="generation-seed" placeholder="e.g., 42, chaos23" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs"/>
-</div>
-
-<div class="animated-divider mt-4 mb-3"></div>
-
-<!-- Punctuation Style -->
-<div class="mb-3">
-    <label class="block text-xs text-slate-400 mb-1" for="punctuation-style">Punctuation Style:</label>
-    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="punctuation-style">
-        <option value="default">Default/AI Choice</option>
-        <option value="minimal">Minimal Punctuation</option>
-        <option value="standard">Standard Punctuation</option>
-        <option value="creative">Emphatic/Creative Punctuation</option>
+<div id="fineTuningControlsContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <!-- Additional Fine-Tuning Settings -->
+    <div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="sarcasm-level-slider">Sarcasm Level: <span class="font-bold text-cyan-400" id="sarcasm-level-value">Balanced</span></label>
+    <input class="w-full slider-thumb" id="sarcasm-level-slider" max="5" min="1" type="range" value="3" disabled/>
+    </div>
+    <div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="realism-vs-surrealism">Realism vs. Surrealism:</label>
+    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="realism-vs-surrealism" disabled>
+    <option value="balanced">Balanced</option>
+    <option value="realistic">Grounded</option>
+    <option value="surreal">Surreal</option>
+    <option value="dreamlike">Dreamlike</option>
     </select>
+    </div>
+    <div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="visual-imagery-slider">Visual Imagery Intensity: <span class="font-bold text-cyan-400" id="visual-imagery-value">3</span></label>
+    <input class="w-full slider-thumb" id="visual-imagery-slider" max="5" min="1" type="range" value="3" disabled/>
+    </div>
+    <div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="logical-coherence-toggle">Logical Coherence:</label>
+    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="logical-coherence-toggle" disabled>
+    <option value="auto">Auto</option>
+    <option value="tight">Tightly coherent</option>
+    <option value="loose">Loosely connected</option>
+    <option value="chaotic">Intentionally incoherent</option>
+    </select>
+    </div>
+    <div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="exaggeration-mode">Exaggeration Mode:</label>
+    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="exaggeration-mode" disabled>
+    <option value="mild">Mild</option>
+    <option value="medium">Medium</option>
+    <option value="over-the-top">Over the Top</option>
+    <option value="absurd-max">Absurd Max</option>
+    </select>
+    </div>
 </div>
 
-<!-- Sentence Length Variation -->
-<div class="mb-3">
-    <label class="block text-xs text-slate-400 mb-1" for="sentence-length-variation">Sentence Length Variation:</label>
-    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="sentence-length-variation">
-        <option value="default">Default/AI Choice</option>
-        <option value="mostly-short">Mostly Short Sentences</option>
-        <option value="mixed">Mix of Short & Long Sentences</option>
-        <option value="mostly-long">Mostly Long Sentences</option>
-    </select>
+<!-- Master Toggle for Advanced Generation Parameters -->
+<div class="mt-4 mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableAdvancedGenParamsToggle">Enable Advanced Generation Parameters</label>
+    <label class="switch"><input id="enableAdvancedGenParamsToggle" type="checkbox"/><span class="slider round"></span></label>
+</div>
+<div id="advancedGenParamsContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="theme-randomizer-toggle">Theme Randomizer</label>
+      <label class="switch">
+        <input id="theme-randomizer-toggle" type="checkbox" disabled/>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="noun-count">Preferred Noun Count:</label>
+      <input id="noun-count" type="number" min="1" max="50" value="" placeholder="AI Choice" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="verb-density">Verb Density:</label>
+      <input type="range" id="verb-density" min="1" max="5" value="3" class="slider-thumb w-full" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="sentence-rhythm">Sentence Rhythm:</label>
+      <select id="sentence-rhythm" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1" disabled>
+        <option value="varied" selected>Varied</option>
+        <option value="short-punchy">Short & Punchy</option>
+        <option value="long-runons">Long Run-ons</option>
+        <option value="musical">Musical Flow</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="backstory-injection">Backstory Injection:</label>
+      <textarea id="backstory-injection" rows="2" placeholder="e.g., this character used to be a pro skater" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="emotion-arc">Emotion Arc:</label>
+      <select id="emotion-arc" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1" disabled>
+        <option value="neutral" selected>Neutral</option>
+        <option value="rise-fall">Rise & Fall</option>
+        <option value="fall-rise">Fall then Rise</option>
+        <option value="volatile">Chaotic Mood Swings</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="shock-value">Shock Value: <span class="font-bold text-cyan-400" id="shock-value-label">3</span></label>
+      <input type="range" id="shock-value" min="1" max="5" value="3" class="slider-thumb w-full" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="callback-count">Number of Callbacks:</label>
+      <input type="number" id="callback-count" min="0" max="10" value="0" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs" disabled/>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="conflict-type">Primary Conflict Type:</label>
+      <select id="conflict-type" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1" disabled>
+        <option value="internal" selected>Internal (psychological)</option>
+        <option value="social">Social (drama, beef)</option>
+        <option value="absurdist">Absurdist (nonsense)</option>
+        <option value="physical">Physical (slapstick)</option>
+        <option value="cosmic">Cosmic (existential/AI/God)</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="block text-xs text-slate-400 mb-1" for="generation-seed">Generation Seed (Optional):</label>
+      <input type="text" id="generation-seed" placeholder="e.g., 42, chaos23" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled/>
+    </div>
+</div>
+
+<!-- Master Toggle for Output Formatting Controls -->
+<div class="mt-4 mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableOutputFormattingToggle">Enable Output Formatting Controls</label>
+    <label class="switch"><input id="enableOutputFormattingToggle" type="checkbox"/><span class="slider round"></span></label>
+</div>
+<div id="outputFormattingContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <!-- Punctuation Style -->
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="punctuation-style">Punctuation Style:</label>
+        <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="punctuation-style" disabled>
+            <option value="default" selected>Default/AI Choice</option>
+            <option value="minimal">Minimal Punctuation</option>
+            <option value="standard">Standard Punctuation</option>
+            <option value="creative">Emphatic/Creative Punctuation</option>
+        </select>
+    </div>
+
+    <!-- Sentence Length Variation -->
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="sentence-length-variation">Sentence Length Variation:</label>
+        <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="sentence-length-variation" disabled>
+            <option value="default" selected>Default/AI Choice</option>
+            <option value="mostly-short">Mostly Short Sentences</option>
+            <option value="mixed">Mix of Short & Long Sentences</option>
+            <option value="mostly-long">Mostly Long Sentences</option>
+        </select>
+    </div>
 </div>
 
 </div>
@@ -783,15 +802,11 @@
 <div class="tab-panel" id="tab-topics">
 <!-- More Topic Controls -->
 <div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="topic-priority-mode">Topic Priority Mode:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="topic-priority-mode">
-<option value="balanced">Balanced</option>
-<option value="strict">Strict Topic Enforcement</option>
-<option value="loose">Loose Theme Matching</option>
-<option value="randomized">Chaotic Topic Use</option>
-</select>
+    <label class="block text-xs text-slate-400 mb-1" for="exclude-topics-textarea">Exclude Topics (one per line):</label>
+    <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="exclude-topics-textarea" placeholder="e.g., politics
+    sports" rows="2"></textarea>
 </div>
-<div id="topic-controls">
+<div id="topic-controls"> <!-- This div was for the main topic grid, keeping it -->
 <p class="text-sm text-slate-400 mb-2 tracking-widest text-center">TOPIC MATRIX</p>
 <div class="flex flex-wrap justify-center gap-2 mb-3" id="topic-grid"></div>
 <div class="grid grid-cols-3 gap-2 text-xs mb-3">
@@ -808,203 +823,166 @@
 </div>
 </div>
 <div class="animated-divider"></div> <!-- Animated Divider -->
+
 <div class="border-t border-slate-700/50 pt-3 mt-4">
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="topic-influence-slider">Topic Influence: <span class="font-bold text-cyan-400" id="topic-influence-value">Balanced</span></label>
-<input class="w-full slider-thumb" id="topic-influence-slider" max="5" min="1" type="range" value="3"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="exclude-topics-textarea">Exclude Topics (one per line):</label>
-<textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="exclude-topics-textarea" placeholder="e.g., politics
-sports" rows="2"></textarea>
-</div>
-<div class="flex justify-between items-center mt-4">
-<label class="block text-xs text-slate-400 mb-1">Topic Clustering:</label>
-<button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="manage-clusters-btn">Manage Clusters</button>
-</div>
-<div class="flex gap-2">
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-1/2 text-xs focus:ring-cyan-500 focus:border-cyan-500" id="cluster-name-input" placeholder="Cluster Name" type="text"/>
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-1/4 h-8" id="cluster-color-input" type="color" value="#22d3ee"/>
-<button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="create-cluster-btn">Create Cluster</button>
-</div>
+    <!-- Master Toggle for Advanced Topic Specifications -->
+    <div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+        <label class="text-sm cursor-pointer select-none" for="enableAdvancedTopicSpecsToggle">Enable Advanced Topic Specifications</label>
+        <label class="switch"><input id="enableAdvancedTopicSpecsToggle" type="checkbox"/><span class="slider round"></span></label>
+    </div>
+    <div id="advancedTopicSpecsContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+        <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="topic-priority-mode">Topic Priority Mode:</label>
+        <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="topic-priority-mode" disabled>
+        <option value="balanced" selected>Balanced</option>
+        <option value="strict">Strict Topic Enforcement</option>
+        <option value="loose">Loose Theme Matching</option>
+        <option value="randomized">Chaotic Topic Use</option>
+        </select>
+        </div>
+        <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="topic-influence-slider">Topic Influence: <span class="font-bold text-cyan-400" id="topic-influence-value">Balanced</span></label>
+        <input class="w-full slider-thumb" id="topic-influence-slider" max="5" min="1" type="range" value="3" disabled/>
+        </div>
+        <!-- Topic Interaction Notes -->
+        <div class="mb-3">
+            <label class="block text-xs text-slate-400 mb-1" for="topic-interaction-notes">Topic Interaction Notes (Optional):</label>
+            <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="topic-interaction-notes" placeholder="e.g., Make Topic X the setup, Topic Y the punchline. Contrast Topic A and B." rows="2" disabled></textarea>
+        </div>
+        <!-- Sub-theme Specification -->
+        <div class="mb-3">
+            <label class="block text-xs text-slate-400 mb-1" for="subtheme-specification">Sub-theme / Angle Specification (Optional):</label>
+            <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="subtheme-specification" placeholder="e.g., For 'Animals', focus on nocturnal. For 'Tech', emphasize outdated gadgets." rows="2" disabled></textarea>
+        </div>
+    </div>
 
-<div class="animated-divider mt-4 mb-3"></div>
-
-<!-- Topic Interaction Notes -->
-<div class="mb-3">
-    <label class="block text-xs text-slate-400 mb-1" for="topic-interaction-notes">Topic Interaction Notes (Optional):</label>
-    <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="topic-interaction-notes" placeholder="e.g., Make Topic X the setup, Topic Y the punchline. Contrast Topic A and B." rows="2"></textarea>
-</div>
-
-<!-- Sub-theme Specification -->
-<div class="mb-3">
-    <label class="block text-xs text-slate-400 mb-1" for="subtheme-specification">Sub-theme / Angle Specification (Optional):</label>
-    <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="subtheme-specification" placeholder="e.g., For 'Animals', focus on nocturnal. For 'Tech', emphasize outdated gadgets." rows="2"></textarea>
-</div>
-
+    <div class="animated-divider mt-4 mb-3"></div>
+    <div class="flex justify-between items-center mt-4">
+    <label class="block text-xs text-slate-400 mb-1">Topic Clustering:</label>
+    <button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="manage-clusters-btn">Manage Clusters</button>
+    </div>
+    <div class="flex gap-2">
+    <input class="bg-slate-800 border border-slate-600 rounded p-1 w-1/2 text-xs focus:ring-cyan-500 focus:border-cyan-500" id="cluster-name-input" placeholder="Cluster Name" type="text"/>
+    <input class="bg-slate-800 border border-slate-600 rounded p-1 w-1/4 h-8" id="cluster-color-input" type="color" value="#22d3ee"/>
+    <button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="create-cluster-btn">Create Cluster</button>
+    </div>
 </div>
 </div>
 <!-- Content Tab -->
 <div class="tab-panel" id="tab-content">
 <!-- More Content Controls -->
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="punchline-style">Punchline Style:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="punchline-style">
-<option value="twist">Surprise Twist</option>
-<option value="callback">Callback</option>
-<option value="shock">Shock Factor</option>
-<option value="dry">Dry/Witty</option>
-</select>
+
+<!-- Master Toggle for Narrative Controls -->
+<div class="mt-4 mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableNarrativeControlToggle">Enable Narrative & Structural Controls</label>
+    <label class="switch"><input id="enableNarrativeControlToggle" type="checkbox"/><span class="slider round"></span></label>
 </div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="sentence-structure">Preferred Sentence Structure:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="sentence-structure">
-<option value="any">Any</option>
-<option value="compound">Compound Sentences</option>
-<option value="fragmented">Fragmented Style</option>
-<option value="run-on">Run-On Chaos</option>
-</select>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="guaranteed-words">Guaranteed Words:</label>
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="guaranteed-words" placeholder="e.g., uncle, whiplash" type="text"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="starts-with">Starts With (one per line):</label>
-<textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="starts-with" placeholder="e.g., yo uncle
-nigga you" rows="2"></textarea>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="scenario-list">Scenario List (one per line):</label>
-<textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="scenario-list" placeholder="e.g., during a job interview
-at a funeral" rows="3"></textarea>
-<div class="flex items-center gap-2 mt-2">
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="current-scenario" placeholder="Current Scenario (or enter manually)" type="text"/>
-<button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="random-scenario-btn">Random</button>
-<button class="toggle-btn !text-xs !py-1 !w-auto px-3" id="clear-scenario-btn">Clear</button>
-</div>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="cultural-context">Cultural Context (one per line):</label>
-<textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="cultural-context" placeholder="e.g., 90s skateboarding
-Warhammer 40k lore
-anime, k-pop" rows="2"></textarea>
-</div>
-<div class="animated-divider"></div>
-<div class="mb-3 flex justify-between items-center gap-4">
-<div>
-<label class="block text-xs text-slate-400 mb-1" for="min-words">Min Words:</label>
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-20 text-center text-xs" id="min-words" max="50" min="1" type="number" value="5"/>
-</div>
-<div>
-<label class="block text-xs text-slate-400 mb-1" for="max-words">Max Words:</label>
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-20 text-center text-xs" id="max-words" max="100" min="1" type="number" value="20"/>
-</div>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="complexity-level">Complexity/Vocabulary:</label>
-<input class="w-full slider-thumb" id="complexity-level" max="10" min="1" type="range" value="5"/>
-<span class="text-xs text-cyan-400 text-right block mt-1" id="complexity-value">Medium</span>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="joke-tone">Tone/Mood:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="joke-tone">
-<option value="any">Any</option>
-<option value="sarcastic">Sarcastic</option>
-<option value="absurd">Absurd</option>
-<option value="dark">Dark</option>
-<option value="lighthearted">Lighthearted</option>
-<option value="cynical">Cynical</option>
-<option value="ironic">Ironic</option>
-</select>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="humor-type">Humor Type:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="humor-type">
-<option value="any">Any</option>
-<option value="observational">Observational</option>
-<option value="slapstick">Slapstick</option>
-<option value="wordplay">Wordplay</option>
-<option value="dark humor">Dark Humor</option>
-<option value="surreal">Surreal</option>
-<option value="satirical">Satirical</option>
-</select>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="joke-structure">Joke Structure:</label>
-<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="joke-structure">
-<option value="any">Any (Standard)</option>
-<option value="question-answer">Question &amp; Answer</option>
-<option value="dialogue">Short Dialogue</option>
-<option value="one-liner">Punchy One-Liner</option>
-</select>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="slang-level-slider">Slang/Jargon Level: <span class="font-bold text-cyan-400" id="slang-level-value">Normal</span></label>
-<input class="w-full slider-thumb" id="slang-level-slider" max="5" min="1" type="range" value="3"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="narrator-persona">Narrator Persona:</label>
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="narrator-persona" placeholder="e.g., a tired robot, an ancient wizard" type="text"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="target-audience">Target Audience:</label>
-<input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="target-audience" placeholder="e.g., adults, gamers, sci-fi fans" type="text"/>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="forbidden-constraints">Forbidden Constraints (Negative Prompt):</label>
-<textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="forbidden-constraints" placeholder="Words or themes to avoid (e.g., politics, puns, the word 'moist')" rows="2"></textarea>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="excluded-words">Excluded Words:</label>
-<textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="excluded-words" placeholder="Specific words to exclude" rows="2"></textarea>
+<div id="narrativeControlContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <!-- Narrative Structure Control -->
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="narrative-structure">Narrative Structure:</label>
+        <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="narrative-structure" disabled>
+            <option value="default" selected>Default/Flexible</option>
+            <option value="setup-punchline">Standard Setup-Punchline</option>
+            <option value="observational-anecdote">Observational Anecdote</option>
+            <option value="abstract-surreal">Abstract/Surreal Flow</option>
+        </select>
+    </div>
+    <!-- Punchline Style and Sentence Structure moved here -->
+     <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="punchline-style">Punchline Style:</label>
+        <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="punchline-style" disabled>
+            <option value="twist" selected>Surprise Twist</option>
+            <option value="callback">Callback</option>
+            <option value="shock">Shock Factor</option>
+            <option value="dry">Dry/Witty</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="sentence-structure">Preferred Sentence Structure:</label>
+        <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="sentence-structure" disabled>
+            <option value="any" selected>Any</option>
+            <option value="compound">Compound Sentences</option>
+            <option value="fragmented">Fragmented Style</option>
+            <option value="run-on">Run-On Chaos</option>
+        </select>
+    </div>
 </div>
 
-<div class="animated-divider"></div>
-
-<!-- Part-of-Speech Control -->
-<div class="mb-3">
-    <label class="block text-xs text-slate-400 mb-2">Part-of-Speech Guidance:</label>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-        <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
-            <input type="checkbox" id="pos-emphasize-adjectives" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded">
-            <label for="pos-emphasize-adjectives" class="cursor-pointer select-none">Emphasize Adjectives</label>
-        </div>
-        <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
-            <input type="checkbox" id="pos-minimize-adverbs" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded">
-            <label for="pos-minimize-adverbs" class="cursor-pointer select-none">Minimize Adverbs</label>
-        </div>
-        <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
-            <input type="checkbox" id="pos-ensure-strong-verbs" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded">
-            <label for="pos-ensure-strong-verbs" class="cursor-pointer select-none">Ensure Strong Verbs</label>
+<!-- Master Toggle for Linguistic Style Controls -->
+<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableLinguisticStyleToggle">Enable Linguistic Style Controls</label>
+    <label class="switch"><input id="enableLinguisticStyleToggle" type="checkbox"/><span class="slider round"></span></label>
+</div>
+<div id="linguisticStyleControlsContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <!-- Part-of-Speech Control -->
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-2">Part-of-Speech Guidance:</label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+            <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
+                <input type="checkbox" id="pos-emphasize-adjectives" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded" disabled>
+                <label for="pos-emphasize-adjectives" class="cursor-pointer select-none">Emphasize Adjectives</label>
+            </div>
+            <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
+                <input type="checkbox" id="pos-minimize-adverbs" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded" disabled>
+                <label for="pos-minimize-adverbs" class="cursor-pointer select-none">Minimize Adverbs</label>
+            </div>
+            <div class="flex items-center gap-2 p-1 rounded-md bg-slate-800/30">
+                <input type="checkbox" id="pos-ensure-strong-verbs" class="bg-slate-700 border-slate-600 text-cyan-500 focus:ring-cyan-500 h-4 w-4 rounded" disabled>
+                <label for="pos-ensure-strong-verbs" class="cursor-pointer select-none">Ensure Strong Verbs</label>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Narrative Structure Control -->
-<div class="mb-3">
-    <label class="block text-xs text-slate-400 mb-1" for="narrative-structure">Narrative Structure:</label>
-    <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="narrative-structure">
-        <option value="default">Default/Flexible</option>
-        <option value="setup-punchline">Standard Setup-Punchline</option>
-        <option value="observational-anecdote">Observational Anecdote</option>
-        <option value="abstract-surreal">Abstract/Surreal Flow</option>
-        <!-- Note: Question-Answer & Dialogue are already in Joke Structure, consider merging or specializing if kept -->
-    </select>
+<!-- Master Toggle for Advanced Content Inputs & Constraints -->
+<div class="mt-4 mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableAdvancedContentInputsToggle">Enable Specific Content Inputs & Constraints</label>
+    <label class="switch"><input id="enableAdvancedContentInputsToggle" type="checkbox"/><span class="slider round"></span></label>
 </div>
-
-<!-- Constraint: No Rhetorical Questions -->
-<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
-    <label class="text-sm cursor-pointer select-none" for="constraint-no-rhetorical">Disallow Rhetorical Questions</label>
-    <label class="switch"><input id="constraint-no-rhetorical" type="checkbox"/><span class="slider round"></span></label>
+<div id="advancedContentInputsContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <!-- Constraint: No Rhetorical Questions -->
+    <div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+        <label class="text-sm cursor-pointer select-none" for="constraint-no-rhetorical">Disallow Rhetorical Questions</label>
+        <label class="switch"><input id="constraint-no-rhetorical" type="checkbox" disabled/><span class="slider round"></span></label>
+    </div>
+    <!-- Constraint: Clear Subject -->
+    <div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+        <label class="text-sm cursor-pointer select-none" for="constraint-clear-subject">Ensure Clear Subject</label>
+        <label class="switch"><input id="constraint-clear-subject" type="checkbox" disabled/><span class="slider round"></span></label>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="guaranteed-words">Guaranteed Words:</label>
+        <input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="guaranteed-words" placeholder="e.g., uncle, whiplash" type="text" disabled/>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="starts-with">Starts With (one per line):</label>
+        <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="starts-with" placeholder="e.g., yo uncle
+    nigga you" rows="2" disabled></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="cultural-context">Cultural Context (one per line):</label>
+        <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="cultural-context" placeholder="e.g., 90s skateboarding
+    Warhammer 40k lore
+    anime, k-pop" rows="2" disabled></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="narrator-persona">Narrator Persona:</label>
+        <input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="narrator-persona" placeholder="e.g., a tired robot, an ancient wizard" type="text" disabled/>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="target-audience">Target Audience:</label>
+        <input class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="target-audience" placeholder="e.g., adults, gamers, sci-fi fans" type="text" disabled/>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="forbidden-constraints">Forbidden Constraints (Negative Prompt):</label>
+        <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="forbidden-constraints" placeholder="Words or themes to avoid (e.g., politics, puns, the word 'moist')" rows="2" disabled></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="excluded-words">Excluded Words:</label>
+        <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="excluded-words" placeholder="Specific words to exclude" rows="2" disabled></textarea>
+    </div>
 </div>
-
-<!-- Constraint: Clear Subject -->
-<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
-    <label class="text-sm cursor-pointer select-none" for="constraint-clear-subject">Ensure Clear Subject</label>
-    <label class="switch"><input id="constraint-clear-subject" type="checkbox"/><span class="slider round"></span></label>
-</div>
-
 
 <div class="animated-divider"></div> <!-- Animated Divider -->
 <div class="text-center mt-4">
@@ -1017,20 +995,30 @@ anime, k-pop" rows="2"></textarea>
 <div class="mb-3">
 <label class="block text-xs text-slate-400 mb-1" for="humor-algorithm-mode">Humor Algorithm Mode:</label>
 <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="humor-algorithm-mode">
-<option value="default">Default Model</option>
+<option value="default" selected>Default Model</option>
 <option value="experimental">Experimental Mode</option>
 <option value="mimic">Mimic Celebrity Voice</option>
 <option value="chaotic">Chaotic Neural Net</option>
 </select>
 </div>
-<div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="entropy-bias">Entropy Bias:</label>
-<input class="w-full slider-thumb" id="entropy-bias" max="10" min="0" type="range" value="5"/>
-</div>
-<div class="mb-4 border-b border-slate-700/50 pb-4">
+
+<div class="mb-4 border-b border-slate-700/50 pb-4"> <!-- Moved theme color picker out of any master toggle -->
 <label class="block text-xs text-slate-400 mb-1" for="theme-color-picker">Theme Color:</label>
 <input class="w-full h-10 p-1 bg-slate-800 border border-slate-600 rounded cursor-pointer" id="theme-color-picker" type="color" value="#22d3ee"/>
 </div>
+
+<!-- Master Toggle for Experimental API Tuning -->
+<div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
+    <label class="text-sm cursor-pointer select-none" for="enableExperimentalApiTuningToggle">Enable Experimental API Tuning</label>
+    <label class="switch"><input id="enableExperimentalApiTuningToggle" type="checkbox"/><span class="slider round"></span></label>
+</div>
+<div id="experimentalApiTuningContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
+    <div class="mb-3">
+    <label class="block text-xs text-slate-400 mb-1" for="entropy-bias">Entropy Bias:</label>
+    <input class="w-full slider-thumb" id="entropy-bias" max="10" min="0" type="range" value="5" disabled/>
+    </div>
+</div>
+
 <div class="mb-3">
 <label class="block text-xs text-slate-400 mb-1" for="inspirational-source">Joke Source:</label>
 <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="inspirational-source" placeholder="Paste text here to match style (e.g., sample jokes)..." rows="4"></textarea>
@@ -1274,7 +1262,64 @@ anime, k-pop" rows="2"></textarea>
         const knowledgeBaseSelect = document.getElementById('knowledge-base-select');
         const themeColorPicker = document.getElementById('theme-color-picker');
         const hotkeysBtn = document.getElementById('hotkeys-btn');
-        const faqBtn = document.getElementById('faq-btn'); 
+        const faqBtn = document.getElementById('faq-btn');
+
+        // Master Toggle IDs and their corresponding container IDs
+        const masterToggleConfig = [
+            { toggleId: 'enableFineTuningToggle', containerId: 'fineTuningControlsContainer', childControlIds: ['sarcasm-level-slider', 'realism-vs-surrealism', 'visual-imagery-slider', 'logical-coherence-toggle', 'exaggeration-mode'] },
+            { toggleId: 'enableAdvancedGenParamsToggle', containerId: 'advancedGenParamsContainer', childControlIds: ['theme-randomizer-toggle', 'noun-count', 'verb-density', 'sentence-rhythm', 'backstory-injection', 'emotion-arc', 'shock-value', 'callback-count', 'conflict-type', 'generation-seed'] },
+            { toggleId: 'enableOutputFormattingToggle', containerId: 'outputFormattingContainer', childControlIds: ['punctuation-style', 'sentence-length-variation'] },
+            { toggleId: 'enableAdvancedTopicSpecsToggle', containerId: 'advancedTopicSpecsContainer', childControlIds: ['topic-priority-mode', 'topic-influence-slider', 'topic-interaction-notes', 'subtheme-specification'] },
+            { toggleId: 'enableLinguisticStyleToggle', containerId: 'linguisticStyleControlsContainer', childControlIds: ['pos-emphasize-adjectives', 'pos-minimize-adverbs', 'pos-ensure-strong-verbs'] },
+            { toggleId: 'enableNarrativeControlToggle', containerId: 'narrativeControlContainer', childControlIds: ['narrative-structure', 'punchline-style', 'sentence-structure'] },
+            { toggleId: 'enableAdvancedContentInputsToggle', containerId: 'advancedContentInputsContainer', childControlIds: ['constraint-no-rhetorical', 'constraint-clear-subject', 'guaranteed-words', 'starts-with', 'cultural-context', 'narrator-persona', 'target-audience', 'forbidden-constraints', 'excluded-words'] },
+            { toggleId: 'enableExperimentalApiTuningToggle', containerId: 'experimentalApiTuningContainer', childControlIds: ['entropy-bias'] }
+        ];
+
+        function setControlsDisabled(containerId, childControlIds, isDisabled) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                childControlIds.forEach(id => {
+                    const control = document.getElementById(id);
+                    if (control) {
+                        control.disabled = isDisabled;
+                        // If disabling, also visually grey out the parent label if it's a simple control
+                        // For more complex controls (like sliders with value displays), more specific styling might be needed.
+                        let parentLabel = control.closest('label');
+                        if (parentLabel) {
+                             parentLabel.style.opacity = isDisabled ? 0.5 : 1;
+                        }
+                        // For sliders, also disable/enable their output display if they have one
+                        const outputDisplay = document.getElementById(id + '-value');
+                        if (outputDisplay) {
+                            outputDisplay.style.opacity = isDisabled ? 0.5 : 1;
+                        }
+                    } else {
+                        console.warn(`Control with ID ${id} not found within container ${containerId}`);
+                    }
+                });
+                // Optionally, visually indicate the whole container is disabled/enabled
+                container.style.opacity = isDisabled ? 0.7 : 1; // Adjust opacity as desired
+            } else {
+                 console.warn(`Container with ID ${containerId} not found.`);
+            }
+        }
+
+        function initializeMasterToggles() {
+            masterToggleConfig.forEach(config => {
+                const toggle = document.getElementById(config.toggleId);
+                if (toggle) {
+                    // Set initial state of child controls based on toggle's default checked state
+                    setControlsDisabled(config.containerId, config.childControlIds, !toggle.checked);
+
+                    toggle.addEventListener('change', function() {
+                        setControlsDisabled(config.containerId, config.childControlIds, !this.checked);
+                    });
+                } else {
+                    console.warn(`Master toggle with ID ${config.toggleId} not found.`);
+                }
+            });
+        }
         
         // Content control elements
         const minWordsInput = document.getElementById('min-words');
@@ -1290,23 +1335,23 @@ anime, k-pop" rows="2"></textarea>
         const narratorPersonaInput = document.getElementById('narrator-persona');
 
         // Generation Tab elements
-const jokeLengthSlider = document.getElementById('joke-length-slider');
-const jokeLengthValue = document.getElementById('joke-length-value');
+        const jokeLengthSlider = document.getElementById('joke-length-slider');
+        const jokeLengthValue = document.getElementById('joke-length-value');
 
-const lengthSettings = {
-    1: { label: "Very Short", min: 3, max: 6 },
-    2: { label: "Short", min: 5, max: 10 },
-    3: { label: "Medium", min: 10, max: 20 },
-    4: { label: "Long", min: 25, max: 50 },
-    5: { label: "Epic & Convoluted", min: 50, max: 120 }
-};
+        const lengthSettings = {
+            1: { label: "Very Short", min: 3, max: 6 },
+            2: { label: "Short", min: 5, max: 10 },
+            3: { label: "Medium", min: 10, max: 20 },
+            4: { label: "Long", min: 25, max: 50 },
+            5: { label: "Epic & Convoluted", min: 50, max: 120 }
+        };
 
-jokeLengthSlider.addEventListener('input', () => {
-    const val = jokeLengthSlider.value;
-    jokeLengthValue.textContent = lengthSettings[val].label;
-    minWordsInput.value = lengthSettings[val].min;
-    maxWordsInput.value = lengthSettings[val].max;
-});
+        if(jokeLengthSlider) jokeLengthSlider.addEventListener('input', () => {
+            const val = jokeLengthSlider.value;
+            if(jokeLengthValue) jokeLengthValue.textContent = lengthSettings[val].label;
+            if(minWordsInput) minWordsInput.value = lengthSettings[val].min;
+            if(maxWordsInput) maxWordsInput.value = lengthSettings[val].max;
+        });
 
         const detailLevelSlider = document.getElementById('detail-level-slider');
         const detailLevelValueSpan = document.getElementById('detail-level-value');
@@ -1324,7 +1369,7 @@ jokeLengthSlider.addEventListener('input', () => {
         let scrambleInterval, typewriterInterval;
         let lastGeneratedJoke = null;
         let currentMode = 'single';
-        let absurdity = 5;
+        let absurdity = absurditySlider ? absurditySlider.value : 5; // Initialize from slider if exists
         let isThemeLocked = false;
         let isBatchMode = false;
         let availableTopics = ['Food', 'Animals', 'Tech', 'History', 'Space', 'Sports', 'Music', 'Movies', 'Random']; 
@@ -1336,14 +1381,15 @@ jokeLengthSlider.addEventListener('input', () => {
         let usedFamilyMembers = new Set();
         let usedObjects = new Set();
         let usedActions = new Set();
-        let usedComparisons = new Set();        let currentScenario = '';
-        let randomScenarioMode = false;
+        let usedComparisons = new Set();
+        let currentScenario = ''; // This seems to be for the currentScenarioInput, should be fine
+        let randomScenarioMode = false; // This seems unused, can be reviewed later
         let savedTemplates = {};
         let currentTemplateCategory = 'custom';
         let references = [];
         let knowledgeBases = [];
-        let selectedKnowledgeBase = '';
-        let knowledgeBaseKeywords = '';
+        let selectedKnowledgeBase = ''; // This seems unused
+        let knowledgeBaseKeywords = ''; // This seems unused
         const themeVariations = {
             familyMembers: ['uncle', 'dad', 'mom', 'cousin', 'brother', 'sister', 'grandma', 'grandpa', 'aunt'],
             objects: ['toilet', 'shower', 'oven', 'alarm clock', 'remote', 'belt', 'stapler', 'cardboard', 'fire hose', 'hotdog', 'jar', 'toolbox', 'knuckles', 'anchor', 'hat'],
@@ -1357,6 +1403,29 @@ jokeLengthSlider.addEventListener('input', () => {
         const tabsContent = document.getElementById('tabs-content');
 
         // --- HELPER FUNCTIONS ---
+        function setControlsDisabled(containerId, isDisabled) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const controls = container.querySelectorAll('input:not([type="checkbox"][id*="enable"]), select, textarea, button:not([id*="enable"])');
+            controls.forEach(control => {
+                control.disabled = isDisabled;
+                 // For sliders that are part of a switch, disable their direct input if master is off
+                if (control.parentElement.classList.contains('switch') && control.type === 'checkbox') {
+                    // This case is for the inner input of a switch, already handled by disabling the input itself
+                } else if (isDisabled) {
+                    control.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    control.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            });
+             // Handle custom styled switches within the container (which are label > input + span)
+            const switchInputs = container.querySelectorAll('.switch input[type="checkbox"]');
+            switchInputs.forEach(switchInput => {
+                switchInput.disabled = isDisabled;
+            });
+        }
+
         function hexToHSL(H) {
             let r = 0, g = 0, b = 0;
             if (H.length == 4) {
@@ -1578,7 +1647,7 @@ ${povInstructions[pov]}
             // === Generation Tab Parameters ===
             const timingLabels = { 1: 'very slow', 2: 'slow', 3: 'normal', 4: 'fast', 5: 'very fast' };
             if (params.timing) configBlock += `\n- **Pacing:** ${timingLabels[params.timing] || 'normal'}.`;
-            if (params.verbosityStyle) configBlock += `\n- **Verbosity:** ${params.verbosityStyle}.`;
+            if (params.verbosityStyle && params.verbosityStyle !== 'default') configBlock += `\n- **Verbosity:** ${params.verbosityStyle}.`;
 
             const sarcasmLabels = { 1: 'none', 2: 'low', 3: 'medium', 4: 'high', 5: 'extreme' };
             if (params.sarcasmLevel) configBlock += `\n- **Sarcasm:** ${sarcasmLabels[params.sarcasmLevel] || 'medium'}.`;
@@ -1592,7 +1661,7 @@ ${povInstructions[pov]}
             const creativityLevelLabelsPrompt = { 1: 'very strict adherence to instructions', 2: 'balanced approach', 3: 'creative interpretation', 4: 'highly innovative and novel', 5: 'radically unconventional' };
             if (params.creativityLevel) configBlock += `\n- **Creativity Approach:** ${creativityLevelLabelsPrompt[params.creativityLevel] || 'balanced approach'}.`;
 
-            if (params.preferredNounCount) configBlock += `\n- **Noun Count (approx):** ${params.preferredNounCount}.`;
+            if (params.preferredNounCount && params.preferredNounCount.trim() !== "") configBlock += `\n- **Noun Count (approx):** ${params.preferredNounCount}.`;
 
             const verbDensityLabels = { 1: 'low', 2: 'sparse', 3: 'medium', 4: 'dense', 5: 'very high' };
             if (params.verbDensity) configBlock += `\n- **Verb Density:** ${verbDensityLabels[params.verbDensity] || 'medium'}.`;
@@ -1602,7 +1671,7 @@ ${povInstructions[pov]}
 
             const shockValueLabels = { 1: 'mild', 2: 'noticeable', 3: 'moderate', 4: 'strong', 5: 'extreme' };
             if (params.shockValue) configBlock += `\n- **Shock Value:** ${shockValueLabels[params.shockValue] || 'moderate'}.`;
-            if (params.callbackCount > 0) configBlock += `\n- **Callbacks Requested:** ${params.callbackCount} (if fits naturally).`;
+            if (parseInt(params.callbackCount) > 0) configBlock += `\n- **Callbacks Requested:** ${params.callbackCount} (if fits naturally).`;
             if (params.conflictType) configBlock += `\n- **Primary Conflict:** ${params.conflictType}.`;
             if (params.generationSeed) configBlock += `\n- **Thematic Seed (for inspiration only):** ${params.generationSeed}.`;
 
@@ -1622,7 +1691,7 @@ ${povInstructions[pov]}
             if (params.topicPriorityMode) configBlock += `\n- **Topic Adherence:** ${params.topicPriorityMode}.`;
             const topicInfluenceLabelsPrompt = { 1: 'subtle hint', 2: 'moderate influence', 3: 'strong focus', 4: 'very strict adherence', 5: 'absolute core' };
             if (params.topicInfluence) configBlock += `\n- **Topic Influence:** ${topicInfluenceLabelsPrompt[params.topicInfluence] || 'strong focus'}.`;
-            if (params.excludedTopics) configBlock += `\n- **Excluded Topics:** MUST NOT be about: ${params.excludedTopics}.`; // Already existed, ensure it's using passed param
+            if (params.excludedTopics) configBlock += `\n- **Excluded Topics:** MUST NOT be about: ${params.excludedTopics}.`;
             if (currentSelectedTopics.length > 0) configBlock += `\n- **General Topics:** Should incorporate: ${currentSelectedTopics.join(', ')}.`;
 
             if (params.topicInteractionNotes) configBlock += `\n- **Topic Interaction Notes:** ${params.topicInteractionNotes}.`;
@@ -1632,7 +1701,7 @@ ${povInstructions[pov]}
             // === Content Tab Parameters (Existing and New) ===
             const minWords = parseInt(params.minWords || 1);
             const maxWords = parseInt(params.maxWords || 100);
-            if (minWords > 0 || maxWords < 100) { // Keep this logic
+            if (minWords > 0 || maxWords < 100) {
                 configBlock += `\n- **Length:** Between ${minWords} and ${maxWords} words.`;
             }
             const complexityLabelsMap = { 1: 'very simple', 2: 'simple', 3: 'basic', 4: 'casual', 5: 'medium', 6: 'standard', 7: 'advanced', 8: 'complex', 9: 'sophisticated', 10: 'highly academic' };
@@ -1678,7 +1747,6 @@ ${povInstructions[pov]}
 
             // === Advanced Tab Parameters ===
             if (params.humorAlgorithmMode) configBlock += `\n- **Humor Algorithm:** ${params.humorAlgorithmMode}.`;
-            // entropy-bias is not directly mappable to Gemini API via simple prompt, will omit from configBlock for now.
 
 
             // Mode specific instructions
@@ -1695,8 +1763,7 @@ ${povInstructions[pov]}
             configBlock += `\n- **Theme Lock:** The joke's theme must be locked to the previous joke: "${referenceJoke}". Do not introduce new subjects.`;
         }
 
-        // Blacklist for repetition prevention
-        if (punchlineBlacklist.size > 0 && avoidRepetitionToggle.checked) { // Only apply if toggle is on
+        if (punchlineBlacklist.size > 0 && avoidRepetitionToggle.checked) {
             const blacklistedItems = Array.from(punchlineBlacklist).slice(-10).map(j => `"${j.replace(/"/g, '\\"')}"`).join(', ');
             configBlock += `\n- **Recent Jokes Blacklist:** CRITICALLY IMPORTANT: The generated joke MUST NOT be any of the following, as they have been generated before and repeating them is strictly forbidden: ${blacklistedItems}.`;
         }
@@ -1750,7 +1817,6 @@ Based on ALL of the above, generate the joke now.`;
 
                 if (result.candidates && result.candidates[0] && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts[0]) {
                      let jokeText = result.candidates[0].content.parts[0].text.trim().replace(/^- /, '');
-                    // Attempt to remove common wrapper phrases the AI might add despite instructions
                     jokeText = jokeText.replace(/^"|"$/g, ''); 
                     jokeText = jokeText.replace(/^(here's your joke:|joke:|new joke:)/i, '').trim();
                     return jokeText;
@@ -1814,7 +1880,6 @@ Suggested Topics:`;
             }
         }
         
-        // --- UI ANIMATION FUNCTIONS ---
         function clearJokeArea() {
             jokeDisplayArea.innerHTML = '';
             const p = document.createElement('p');
@@ -1907,7 +1972,6 @@ Suggested Topics:`;
             }
         }
 
-        // --- TEMPLATE MANAGEMENT ---
         function saveTemplate() {
             const category = templateCategorySelect.value;
             const name = templateNameInput.value.trim();
@@ -1987,7 +2051,6 @@ Suggested Topics:`;
             });
         }
 
-        // --- Custom Alert/Prompt System ---
         function createCustomModal(type) {
             const modal = document.createElement('div');
             modal.className = 'modal';
@@ -2025,15 +2088,22 @@ Suggested Topics:`;
             modal.classList.add('visible');
         }
 
-        function showCustomPrompt(message, callback) {
+        function showCustomPrompt(message, callback, promptMessage = "Enter value:") { // Added promptMessage
             const { modal, modalContent } = createCustomModal('prompt');
             const p = document.createElement('p');
             p.textContent = message;
             p.className = 'text-center text-lg mb-4';
             modalContent.appendChild(p);
 
+            const inputLabel = document.createElement('label'); // For better accessibility
+            inputLabel.textContent = promptMessage;
+            inputLabel.className = 'block text-sm text-slate-400 mb-1';
+            inputLabel.htmlFor = 'customPromptInput';
+            modalContent.appendChild(inputLabel);
+
             const input = document.createElement('input');
             input.type = 'text';
+            input.id = 'customPromptInput';
             input.className = 'bg-slate-800 border border-slate-600 rounded p-2 w-full text-sm focus:ring-cyan-500 focus:border-cyan-500';
             modalContent.appendChild(input);
 
@@ -2071,19 +2141,16 @@ Suggested Topics:`;
         }
 
 
-        // --- KNOWLEDGE BASE MANAGEMENT (PLACEHOLDER) ---
         function manageKnowledgeBases() {
             document.getElementById('knowledgeBaseModal').classList.remove('hidden');
             document.getElementById('knowledgeBaseModal').classList.add('visible');
         }
 
-        // --- REFERENCE LIBRARY (PLACEHOLDER) ---
         function openReferenceLibrary() {
             document.getElementById('referenceLibraryModal').classList.remove('hidden');
             document.getElementById('referenceLibraryModal').classList.add('visible');
         }
 
-        // --- TOPIC CLUSTERS (PLACEHOLDER) ---
         function manageTopicClusters() {
             document.getElementById('topicClustersModal').classList.remove('hidden');
             document.getElementById('topicClustersModal').classList.add('visible');
@@ -2092,7 +2159,6 @@ Suggested Topics:`;
         createClusterBtn.addEventListener('click', () => {
             showCustomAlert("Placeholder: Create Topic Cluster functionality.");
         });
-        // --- API REFERENCE SEARCH (PLACEHOLDER) ---
         async function searchApiForReferences() {
             const query = referenceApiQueryInput.value.trim();
             if (!query) return;
@@ -2121,74 +2187,114 @@ Suggested Topics:`;
         let persistentInputs = []; // Will be populated in initializeUI
 
         function populatePersistentInputs() {
+            // This function defines which UI elements' states should be saved and loaded.
+            // It's crucial that IDs here match exactly with the HTML element IDs.
             persistentInputs = [
-                // Generation Tab
-                { element: document.getElementById('timing-slider'), type: 'value' },
-                { element: document.getElementById('verbosity-style'), type: 'value' },
-                { element: themeLockToggle, type: 'checked' },
-                { element: batchToggle, type: 'checked' },
-                { element: absurditySlider, type: 'value' },
-                { element: batchSteps, type: 'value' },
-                { element: document.getElementById('joke-length-slider'), type: 'value' },
-                { element: detailLevelSlider, type: 'value' },
-                { element: creativityLevelSlider, type: 'value' },
-                { element: avoidRepetitionToggle, type: 'checked' },
-                { element: document.getElementById('sarcasm-level-slider'), type: 'value' },
-                { element: document.getElementById('realism-vs-surrealism'), type: 'value' },
-                { element: document.getElementById('visual-imagery-slider'), type: 'value' },
-                { element: document.getElementById('logical-coherence-toggle'), type: 'value' },
-                { element: document.getElementById('exaggeration-mode'), type: 'value' },
-                { element: document.getElementById('theme-randomizer-toggle'), type: 'checked' },
-                { element: document.getElementById('noun-count'), type: 'value' },
-                { element: document.getElementById('verb-density'), type: 'value' },
-                { element: document.getElementById('sentence-rhythm'), type: 'value' },
-                { element: document.getElementById('backstory-injection'), type: 'value' },
-                { element: document.getElementById('emotion-arc'), type: 'value' },
-                { element: document.getElementById('shock-value'), type: 'value' },
-                { element: document.getElementById('callback-count'), type: 'value' },
-                { element: document.getElementById('conflict-type'), type: 'value' },
-                { element: document.getElementById('generation-seed'), type: 'value' },
-                { element: document.getElementById('punctuation-style'), type: 'value' },
-                { element: document.getElementById('sentence-length-variation'), type: 'value' },
+                // POV Selector (special handling in save/load)
+                // Mode Selector (special handling in save/load)
 
-                // Topics Tab
-                { element: document.getElementById('topic-priority-mode'), type: 'value' },
-                { element: topicInfluenceSlider, type: 'value' },
-                { element: excludeTopicsTextarea, type: 'value' },
-                { element: document.getElementById('topic-interaction-notes'), type: 'value' },
-                { element: document.getElementById('subtheme-specification'), type: 'value' },
+                // Generation Tab - Always Visible Controls
+                { id: 'timing-slider', type: 'value' },
+                { id: 'verbosity-style', type: 'value' },
+                { id: 'theme-lock-toggle', type: 'checked' }, // State depends on last joke, but save its last manual state
+                { id: 'batch-toggle', type: 'checked' },
+                { id: 'absurdity-slider', type: 'value' },
+                { id: 'batch-steps', type: 'value' }, // Visible when batch-toggle is checked
+                { id: 'joke-length-slider', type: 'value' },
+                { id: 'detail-level-slider', type: 'value' },
+                { id: 'creativity-level-slider', type: 'value' },
+                { id: 'avoid-repetition-toggle', type: 'checked' },
 
-                // Content Tab
-                { element: document.getElementById('punchline-style'), type: 'value' },
-                { element: document.getElementById('sentence-structure'), type: 'value' },
-                { element: guaranteedWordsInput, type: 'value' },
-                { element: startsWithTextarea, type: 'value' },
-                { element: scenarioListTextarea, type: 'value' },
-                { element: currentScenarioInput, type: 'value' },
-                { element: culturalContextTextarea, type: 'value' },
-                { element: minWordsInput, type: 'value' },
-                { element: maxWordsInput, type: 'value' },
-                { element: complexityLevelSlider, type: 'value' },
-                { element: jokeToneSelect, type: 'value' },
-                { element: humorTypeSelect, type: 'value' },
-                { element: jokeStructureSelect, type: 'value' },
-                { element: slangLevelSlider, type: 'value' },
-                { element: narratorPersonaInput, type: 'value' },
-                { element: targetAudienceInput, type: 'value' },
-                { element: forbiddenConstraintsTextarea, type: 'value' },
-                { element: excludedWordsTextarea, type: 'value' },
-                { element: document.getElementById('pos-emphasize-adjectives'), type: 'checked' },
-                { element: document.getElementById('pos-minimize-adverbs'), type: 'checked' },
-                { element: document.getElementById('pos-ensure-strong-verbs'), type: 'checked' },
-                { element: document.getElementById('narrative-structure'), type: 'value' },
-                { element: document.getElementById('constraint-no-rhetorical'), type: 'checked' },
-                { element: document.getElementById('constraint-clear-subject'), type: 'checked' },
+                // Generation Tab - Master Toggles
+                { id: 'enableFineTuningToggle', type: 'checked' },
+                { id: 'enableAdvancedGenParamsToggle', type: 'checked' },
+                { id: 'enableOutputFormattingToggle', type: 'checked' },
 
-                // Advanced Tab
-                { element: document.getElementById('humor-algorithm-mode'), type: 'value' },
-                { element: document.getElementById('entropy-bias'), type: 'value' },
-                { element: themeColorPicker, type: 'value' },
-                { element: inspirationalSourceTextarea, type: 'value' },
+                // Generation Tab - Fine-Tuning Controls (Child of enableFineTuningToggle)
+                { id: 'sarcasm-level-slider', type: 'value' },
+                { id: 'realism-vs-surrealism', type: 'value' },
+                { id: 'visual-imagery-slider', type: 'value' },
+                { id: 'logical-coherence-toggle', type: 'value' },
+                { id: 'exaggeration-mode', type: 'value' },
+
+                // Generation Tab - Advanced Generation Parameters (Child of enableAdvancedGenParamsToggle)
+                { id: 'theme-randomizer-toggle', type: 'checked' },
+                { id: 'noun-count', type: 'value' },
+                { id: 'verb-density', type: 'value' },
+                { id: 'sentence-rhythm', type: 'value' },
+                { id: 'backstory-injection', type: 'value' },
+                { id: 'emotion-arc', type: 'value' },
+                { id: 'shock-value', type: 'value' },
+                { id: 'callback-count', type: 'value' },
+                { id: 'conflict-type', type: 'value' },
+                { id: 'generation-seed', type: 'value' },
+
+                // Generation Tab - Output Formatting Controls (Child of enableOutputFormattingToggle)
+                { id: 'punctuation-style', type: 'value' },
+                { id: 'sentence-length-variation', type: 'value' },
+
+                // Topics Tab - Always Visible Controls
+                { id: 'exclude-topics-textarea', type: 'value' },
+                // (Topic selection itself is handled by selectedTopics array)
+
+                // Topics Tab - Master Toggle
+                { id: 'enableAdvancedTopicSpecsToggle', type: 'checked' },
+
+                // Topics Tab - Advanced Topic Specifications (Child of enableAdvancedTopicSpecsToggle)
+                { id: 'topic-priority-mode', type: 'value' },
+                { id: 'topic-influence-slider', type: 'value' },
+                { id: 'topic-interaction-notes', type: 'value' },
+                { id: 'subtheme-specification', type: 'value' },
+
+                // Content Tab - Always Visible Controls
+                { id: 'min-words', type: 'value' },         // Linked to joke-length-slider
+                { id: 'max-words', type: 'value' },         // Linked to joke-length-slider
+                { id: 'complexity-level', type: 'value' },
+                { id: 'joke-tone', type: 'value' },
+                { id: 'humor-type', type: 'value' },
+                // { id: 'joke-structure', type: 'value' }, // Moved to Narrative Control
+                { id: 'slang-level-slider', type: 'value' },
+                // Scenario inputs are always visible
+                { id: 'scenario-list', type: 'value' },
+                { id: 'current-scenario', type: 'value' },
+
+
+                // Content Tab - Master Toggles
+                { id: 'enableNarrativeControlToggle', type: 'checked' },
+                { id: 'enableLinguisticStyleToggle', type: 'checked' },
+                { id: 'enableAdvancedContentInputsToggle', type: 'checked' },
+
+                // Content Tab - Narrative & Structural Controls (Child of enableNarrativeControlToggle)
+                { id: 'narrative-structure', type: 'value' },
+                { id: 'punchline-style', type: 'value' },
+                { id: 'sentence-structure', type: 'value' }, // formerly joke-structure under main content
+
+                // Content Tab - Linguistic Style Controls (Child of enableLinguisticStyleToggle)
+                { id: 'pos-emphasize-adjectives', type: 'checked' },
+                { id: 'pos-minimize-adverbs', type: 'checked' },
+                { id: 'pos-ensure-strong-verbs', type: 'checked' },
+
+                // Content Tab - Specific Content Inputs & Constraints (Child of enableAdvancedContentInputsToggle)
+                { id: 'guaranteed-words', type: 'value' },
+                { id: 'starts-with', type: 'value' },
+                { id: 'cultural-context', type: 'value' },
+                { id: 'narrator-persona', type: 'value' },
+                { id: 'target-audience', type: 'value' }, // Note: target-audience was also a top-level input, ensure IDs are distinct if both needed. Assuming this is the one under master toggle.
+                { id: 'forbidden-constraints', type: 'value' },
+                { id: 'excluded-words', type: 'value' },
+                { id: 'constraint-no-rhetorical', type: 'checked' },
+                { id: 'constraint-clear-subject', type: 'checked' },
+
+                // Advanced Tab - Always Visible Controls
+                { id: 'humor-algorithm-mode', type: 'value' },
+                { id: 'theme-color-picker', type: 'value' },
+                { id: 'inspirational-source', type: 'value' },
+
+                // Advanced Tab - Master Toggle
+                { id: 'enableExperimentalApiTuningToggle', type: 'checked' },
+
+                // Advanced Tab - Experimental API Tuning (Child of enableExperimentalApiTuningToggle)
+                { id: 'entropy-bias', type: 'value' }
             ];
         }
 
@@ -2196,15 +2302,16 @@ Suggested Topics:`;
         function saveUIState() {
             const state = {};
             persistentInputs.forEach(item => {
-                if (item.element) { // Defensive check
-                    state[item.element.id] = item.element[item.type];
+                const element = document.getElementById(item.id);
+                if (element) {
+                    state[item.id] = element[item.type];
                 } else {
-                    console.warn("Missing element for ID during saveUIState:", item.element); // Should not happen if IDs are correct
+                    console.warn("Missing element for ID during saveUIState:", item.id);
                 }
             });
             state.selectedPov = povSelector.querySelector('.toggle-btn.active')?.dataset.pov;
             state.currentMode = currentMode;
-            state.selectedTopics = selectedTopics;
+            state.selectedTopics = selectedTopics; // Already an array of strings
             state.activeTab = tabsNav.querySelector('.tab-btn.active')?.dataset.tab;
             localStorage.setItem('packgenUIState', JSON.stringify(state));
         }
@@ -2215,22 +2322,32 @@ Suggested Topics:`;
                 const state = JSON.parse(savedState);
                 
                 persistentInputs.forEach(item => {
-                    if (item.element && state[item.element.id] !== undefined) {
-                        item.element[item.type] = state[item.element.id];
+                    const element = document.getElementById(item.id);
+                    if (element && state[item.id] !== undefined) {
+                        element[item.type] = state[item.id];
                         // Special handling for sliders to update their visual display values
-                        if (item.element.type === 'range' || item.element.classList.contains('slider-thumb')) {
+                        if (element.type === 'range' || element.classList.contains('slider-thumb')) {
                             const event = new Event('input', { bubbles: true, cancelable: true });
-                            item.element.dispatchEvent(event);
+                            element.dispatchEvent(event);
                         }
-                        // Explicitly update absurdity global variable as it's used directly elsewhere
-                        if (item.element.id === 'absurdity-slider') {
-                            absurdity = state[item.element.id];
+                        // Explicitly update absurdity global variable if it's the absurdity slider
+                        if (item.id === 'absurdity-slider') {
+                            absurdity = state[item.id];
                         }
-                    } else if (item.element && state[item.element.id] === undefined) {
-                        // If a control was saved previously but now it's not in the new saved state
-                        // (e.g. a feature removed), it will just keep its HTML default. This is fine.
-                    } else if (!item.element) {
-                        console.warn("Missing element for ID during loadUIState:", item.element);
+                         // After setting the value, if it's a master toggle, re-apply disabled states to children
+                        if (item.type === 'checked' && masterToggleConfig.some(conf => conf.toggleId === item.id)) {
+                            const config = masterToggleConfig.find(conf => conf.toggleId === item.id);
+                            if (config) {
+                                // Call setControlsDisabled directly. initializeMasterToggles also does this,
+                                // but calling it here ensures it's done *after* the toggle's state is loaded.
+                                setControlsDisabled(config.containerId, config.childControlIds, !element.checked);
+                            }
+                        }
+                    } else if (element && state[item.id] === undefined) {
+                        // Element exists, but no saved state for it (e.g. new control added after state was saved)
+                        // It will keep its HTML default. This is fine.
+                    } else if (!element) {
+                        // console.warn("Missing element for ID during loadUIState:", item.id); // Can be noisy if old saved states exist
                     }
                 });
 
@@ -2260,11 +2377,8 @@ Suggested Topics:`;
                 updateModeControls(); 
                 batchControls.classList.toggle('hidden', !isBatchMode); 
                 updateThemeColor(themeColorPicker.value); 
-                updateComplexityValueDisplay(); 
-                updateDetailLevelDisplay(); 
-                updateSlangLevelDisplay();
-                updateCreativityLevelDisplay(); 
-                updateTopicInfluenceDisplay(); 
+                // Slider display updates are now handled by dispatchEvent in the loop above
+                // and by explicit calls in initializeUI for initial load.
 
                 if (state.activeTab) {
                     tabsNav.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2278,7 +2392,6 @@ Suggested Topics:`;
             }
         }
 
-        // --- Clear All Content Inputs Functionality ---
         clearContentInputsBtn.addEventListener('click', () => {
             showCustomPrompt("Are you sure you want to clear all content-related input fields? This action cannot be undone.", (confirmValue) => { // Changed confirm to confirmValue
                 if (confirmValue && confirmValue.toLowerCase() === 'yes') { // Example: require explicit "yes"
@@ -2320,54 +2433,66 @@ Suggested Topics:`;
             6: 'Standard', 7: 'Advanced', 8: 'Complex', 9: 'Sophisticated', 10: 'Highly Academic'
         };
         function updateComplexityValueDisplay() {
-            complexityValueSpan.textContent = complexityLabels[complexityLevelSlider.value];
+            if(complexityValueSpan && complexityLevelSlider) complexityValueSpan.textContent = complexityLabels[complexityLevelSlider.value];
         }
-        complexityLevelSlider.addEventListener('input', updateComplexityValueDisplay);
+        if(complexityLevelSlider) complexityLevelSlider.addEventListener('input', updateComplexityValueDisplay);
 
-        // --- Slang Level Display Update ---
         const slangLevelLabels = {
             1: 'None', 2: 'Light', 3: 'Normal', 4: 'Heavy', 5: 'Maximum'
         };
         function updateSlangLevelDisplay() {
-            slangLevelValueSpan.textContent = slangLevelLabels[slangLevelSlider.value];
+            if(slangLevelValueSpan && slangLevelSlider) slangLevelValueSpan.textContent = slangLevelLabels[slangLevelSlider.value];
         }
-        slangLevelSlider.addEventListener('input', updateSlangLevelDisplay);
+        if(slangLevelSlider) slangLevelSlider.addEventListener('input', updateSlangLevelDisplay);
 
-        // --- Detail Level Display Update ---
         const detailLevelLabels = {
             1: 'Very Brief', 2: 'Brief', 3: 'Standard', 4: 'Detailed', 5: 'Highly Descriptive'
         };
         function updateDetailLevelDisplay() {
-            detailLevelValueSpan.textContent = detailLevelLabels[detailLevelSlider.value];
+            if(detailLevelValueSpan && detailLevelSlider) detailLevelValueSpan.textContent = detailLevelLabels[detailLevelSlider.value];
         }
-        detailLevelSlider.addEventListener('input', updateDetailLevelDisplay);
+        if(detailLevelSlider) detailLevelSlider.addEventListener('input', updateDetailLevelDisplay);
 
-        // --- Creativity Level Display Update ---
         const creativityLevelLabels = {
             1: 'Strict', 2: 'Balanced', 3: 'Creative', 4: 'Innovative', 5: 'Radical'
         };
         function updateCreativityLevelDisplay() {
-            creativityLevelValueSpan.textContent = creativityLevelLabels[creativityLevelSlider.value];
+            if(creativityLevelValueSpan && creativityLevelSlider) creativityLevelValueSpan.textContent = creativityLevelLabels[creativityLevelSlider.value];
         }
-        creativityLevelSlider.addEventListener('input', updateCreativityLevelDisplay);
+        if(creativityLevelSlider) creativityLevelSlider.addEventListener('input', updateCreativityLevelDisplay);
 
-        // --- Topic Influence Display Update ---
         const topicInfluenceLabels = {
             1: 'Low', 2: 'Moderate', 3: 'Balanced', 4: 'High', 5: 'Absolute'
         };
         function updateTopicInfluenceDisplay() {
-            topicInfluenceValueSpan.textContent = topicInfluenceLabels[topicInfluenceSlider.value];
+            if(topicInfluenceValueSpan && topicInfluenceSlider) topicInfluenceValueSpan.textContent = topicInfluenceLabels[topicInfluenceSlider.value];
         }
-        topicInfluenceSlider.addEventListener('input', updateTopicInfluenceDisplay);
+        if(topicInfluenceSlider) topicInfluenceSlider.addEventListener('input', updateTopicInfluenceDisplay);
+
+        // Update display for other sliders that have text spans
+        const timingSlider = document.getElementById('timing-slider');
+        const timingValue = document.getElementById('timing-value');
+        const timingTextLabels = {1: "Glacial", 2: "Slow", 3: "Normal", 4: "Fast", 5: "Blitz"};
+        if(timingSlider) timingSlider.addEventListener('input', () => { if(timingValue) timingValue.textContent = timingTextLabels[timingSlider.value] || "Normal"; });
+
+        const sarcasmSlider = document.getElementById('sarcasm-level-slider');
+        const sarcasmValue = document.getElementById('sarcasm-level-value');
+        const sarcasmTextLabels = {1: "None", 2: "Subtle", 3: "Balanced", 4: "Obvious", 5: "Extreme"};
+        if(sarcasmSlider) sarcasmSlider.addEventListener('input', () => { if(sarcasmValue) sarcasmValue.textContent = sarcasmTextLabels[sarcasmSlider.value] || "Balanced"; });
+
+        const visualImagerySlider = document.getElementById('visual-imagery-slider');
+        const visualImageryValue = document.getElementById('visual-imagery-value');
+        const visualImageryTextLabels = {1: "Low", 2: "Subtle", 3: "Moderate", 4: "Vivid", 5: "Intense"};
+        if(visualImagerySlider) visualImagerySlider.addEventListener('input', () => { if(visualImageryValue) visualImageryValue.textContent = visualImageryTextLabels[visualImagerySlider.value] || "3"; });
 
 
         // --- EVENT LISTENERS ---
-        themeColorPicker.addEventListener('input', (e) => {
+        if(themeColorPicker) themeColorPicker.addEventListener('input', (e) => {
             updateThemeColor(e.target.value);
             saveUIState(); 
         });
 
-        tabsNav.addEventListener('click', (e) => {
+        if(tabsNav) tabsNav.addEventListener('click', (e) => {
             const targetBtn = e.target.closest('.tab-btn');
             if (!targetBtn || targetBtn.classList.contains('active')) return;
             tabsNav.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2394,7 +2519,7 @@ Suggested Topics:`;
                 }
             });
         });
-        povSelector.addEventListener('click', (e) => {
+        if(povSelector) povSelector.addEventListener('click', (e) => {
             const targetBtn = e.target.closest('.toggle-btn');
             if (!targetBtn || targetBtn.classList.contains('active')) return;
             if (synth) synth.triggerAttackRelease("C5", "16n", Tone.now());
@@ -2403,7 +2528,7 @@ Suggested Topics:`;
             saveUIState(); 
         });
 
-        modeSelector.addEventListener('click', (e) => {
+        if(modeSelector) modeSelector.addEventListener('click', (e) => {
             const targetBtn = e.target.closest('.toggle-btn');
             if (!targetBtn || targetBtn.classList.contains('active') || targetBtn.disabled) return;
             if (synth) synth.triggerAttackRelease("C5", "16n", Tone.now());
@@ -2413,37 +2538,37 @@ Suggested Topics:`;
             saveUIState(); 
         });
 
-        absurditySlider.addEventListener('input', (e) => {
+        if(absurditySlider) absurditySlider.addEventListener('input', (e) => {
             absurdity = e.target.value;
-            absurdityValue.textContent = absurdity;
+            if(absurdityValue) absurdityValue.textContent = absurdity;
             saveUIState(); 
         });
 
-        themeLockToggle.addEventListener('change', (e) => {
+        if(themeLockToggle) themeLockToggle.addEventListener('change', (e) => {
             isThemeLocked = e.target.checked;
             if (synth) synth.triggerAttackRelease(isThemeLocked ? "E5" : "C5", "16n", Tone.now());
             saveUIState(); 
         });
 
-        batchToggle.addEventListener('change', (e) => {
+        if(batchToggle) batchToggle.addEventListener('change', (e) => {
             isBatchMode = e.target.checked;
-            batchControls.classList.toggle('hidden', !isBatchMode);
+            if(batchControls) batchControls.classList.toggle('hidden', !isBatchMode);
             if (synth) synth.triggerAttackRelease(isBatchMode ? "E5" : "C5", "16n", Tone.now());
             saveUIState(); 
         });
 
-        batchSteps.addEventListener('input', saveUIState); 
+        if(batchSteps) batchSteps.addEventListener('input', saveUIState);
 
-        detailLevelSlider.addEventListener('input', saveUIState);
-        creativityLevelSlider.addEventListener('input', saveUIState);
-        avoidRepetitionToggle.addEventListener('change', saveUIState);
+        if(detailLevelSlider) detailLevelSlider.addEventListener('input', saveUIState);
+        if(creativityLevelSlider) creativityLevelSlider.addEventListener('input', saveUIState);
+        if(avoidRepetitionToggle) avoidRepetitionToggle.addEventListener('change', saveUIState);
 
-        topicInfluenceSlider.addEventListener('input', saveUIState);
-        excludeTopicsTextarea.addEventListener('input', saveUIState);
-        aiTopicSuggestionBtn.addEventListener('click', aiSuggestTopics);
+        if(topicInfluenceSlider) topicInfluenceSlider.addEventListener('input', saveUIState);
+        if(excludeTopicsTextarea) excludeTopicsTextarea.addEventListener('input', saveUIState);
+        if(aiTopicSuggestionBtn) aiTopicSuggestionBtn.addEventListener('click', aiSuggestTopics);
 
 
-        topicGrid.addEventListener('click', (e) => {
+        if(topicGrid) topicGrid.addEventListener('click', (e) => {
             if (!e.target.classList.contains('topic-tag')) return;
             if (synth) synth.triggerAttackRelease("C6", "32n", Tone.now());
             const topic = e.target.dataset.topic;
@@ -2471,27 +2596,27 @@ Suggested Topics:`;
                 }
             }
         }
-        addTopicBtn.addEventListener('click', addCustomTopic);
-        customTopicInput.addEventListener('keypress', (e) => {
+        if(addTopicBtn) addTopicBtn.addEventListener('click', addCustomTopic);
+        if(customTopicInput) customTopicInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 addCustomTopic();
             }
         });
 
-        selectAllTopicsBtn.addEventListener('click', () => {
+        if(selectAllTopicsBtn) selectAllTopicsBtn.addEventListener('click', () => {
             if (synth) synth.triggerAttackRelease("G4", "16n", Tone.now());
             selectedTopics = [...availableTopics];
             renderTopics();
             saveUIState(); 
         });
-        deselectAllTopicsBtn.addEventListener('click', () => {
+        if(deselectAllTopicsBtn) deselectAllTopicsBtn.addEventListener('click', () => {
             if (synth) synth.triggerAttackRelease("E4", "16n", Tone.now());
             selectedTopics = [];
             renderTopics();
             saveUIState(); 
         });
-        randomizeTopicsBtn.addEventListener('click', () => {
+        if(randomizeTopicsBtn) randomizeTopicsBtn.addEventListener('click', () => {
             if (synth) synth.triggerAttackRelease("B4", "16n", Tone.now());
             const shuffled = [...availableTopics].sort(() => 0.5 - Math.random());
             selectedTopics = shuffled.slice(0, Math.min(3, availableTopics.length));
@@ -2499,7 +2624,7 @@ Suggested Topics:`;
             saveUIState(); 
         });
 
-        randomScenarioBtn.addEventListener('click', () => {
+        if(randomScenarioBtn) randomScenarioBtn.addEventListener('click', () => {
             const scenarios = scenarioListTextarea.value.split('\n').map(s => s.trim()).filter(s => s);
             if (scenarios.length > 0) {
                 currentScenarioInput.value = scenarios[Math.floor(Math.random() * scenarios.length)];
@@ -2507,46 +2632,46 @@ Suggested Topics:`;
             }
         });
 
-        clearScenarioBtn.addEventListener('click', () => {
+        if(clearScenarioBtn) clearScenarioBtn.addEventListener('click', () => {
             currentScenarioInput.value = '';
             saveUIState(); 
         });
         
-        guaranteedWordsInput.addEventListener('input', saveUIState);
-        startsWithTextarea.addEventListener('input', saveUIState);
-        scenarioListTextarea.addEventListener('input', saveUIState);
-        currentScenarioInput.addEventListener('input', saveUIState);
-        culturalContextTextarea.addEventListener('input', saveUIState);
-        inspirationalSourceTextarea.addEventListener('input', saveUIState);
-        forbiddenConstraintsTextarea.addEventListener('input', saveUIState);
-        excludedWordsTextarea.addEventListener('input', saveUIState);
+        if(guaranteedWordsInput) guaranteedWordsInput.addEventListener('input', saveUIState);
+        if(startsWithTextarea) startsWithTextarea.addEventListener('input', saveUIState);
+        if(scenarioListTextarea) scenarioListTextarea.addEventListener('input', saveUIState);
+        if(currentScenarioInput) currentScenarioInput.addEventListener('input', saveUIState);
+        if(culturalContextTextarea) culturalContextTextarea.addEventListener('input', saveUIState);
+        if(inspirationalSourceTextarea) inspirationalSourceTextarea.addEventListener('input', saveUIState);
+        if(forbiddenConstraintsTextarea) forbiddenConstraintsTextarea.addEventListener('input', saveUIState);
+        if(excludedWordsTextarea) excludedWordsTextarea.addEventListener('input', saveUIState);
 
-        minWordsInput.addEventListener('input', saveUIState);
-        maxWordsInput.addEventListener('input', saveUIState);
-        complexityLevelSlider.addEventListener('input', saveUIState);
-        jokeToneSelect.addEventListener('change', saveUIState);
-        humorTypeSelect.addEventListener('change', saveUIState);
-        targetAudienceInput.addEventListener('input', saveUIState);
-        jokeStructureSelect.addEventListener('change', saveUIState);
-        slangLevelSlider.addEventListener('input', saveUIState);
-        narratorPersonaInput.addEventListener('input', saveUIState);
+        if(minWordsInput) minWordsInput.addEventListener('input', saveUIState);
+        if(maxWordsInput) maxWordsInput.addEventListener('input', saveUIState);
+        if(complexityLevelSlider) complexityLevelSlider.addEventListener('input', saveUIState);
+        if(jokeToneSelect) jokeToneSelect.addEventListener('change', saveUIState);
+        if(humorTypeSelect) humorTypeSelect.addEventListener('change', saveUIState);
+        if(targetAudienceInput) targetAudienceInput.addEventListener('input', saveUIState);
+        if(jokeStructureSelect) jokeStructureSelect.addEventListener('change', saveUIState);
+        if(slangLevelSlider) slangLevelSlider.addEventListener('input', saveUIState);
+        if(narratorPersonaInput) narratorPersonaInput.addEventListener('input', saveUIState);
 
 
-        saveTemplateBtn.addEventListener('click', saveTemplate);
-        loadTemplateBtn.addEventListener('click', loadTemplate);
+        if(saveTemplateBtn) saveTemplateBtn.addEventListener('click', saveTemplate);
+        if(loadTemplateBtn) loadTemplateBtn.addEventListener('click', loadTemplate);
 
-        manageClustersBtn.addEventListener('click', manageTopicClusters);
-        referenceLibraryBtn.addEventListener('click', openReferenceLibrary);
-        searchReferencesBtn.addEventListener('click', () => {
+        if(manageClustersBtn) manageClustersBtn.addEventListener('click', manageTopicClusters);
+        if(referenceLibraryBtn) referenceLibraryBtn.addEventListener('click', openReferenceLibrary);
+        if(searchReferencesBtn) searchReferencesBtn.addEventListener('click', () => {
             showCustomAlert("Local Reference Search (functionality not yet implemented)");
         });
-        searchApiBtn.addEventListener('click', searchApiForReferences);
-        knowledgeBaseBtn.addEventListener('click', manageKnowledgeBases);
-        hotkeysBtn.addEventListener('click', () => {
+        if(searchApiBtn) searchApiBtn.addEventListener('click', searchApiForReferences);
+        if(knowledgeBaseBtn) knowledgeBaseBtn.addEventListener('click', manageKnowledgeBases);
+        if(hotkeysBtn) hotkeysBtn.addEventListener('click', () => {
             hotkeysModal.classList.remove('hidden');
             hotkeysModal.classList.add('visible');
         });
-        faqBtn.addEventListener('click', () => { 
+        if(faqBtn) faqBtn.addEventListener('click', () => {
             faqModal.classList.remove('hidden');
             faqModal.classList.add('visible');
         });
@@ -2554,18 +2679,31 @@ Suggested Topics:`;
 
         // --- INITIALIZE UI ---
         function initializeUI() {
+            populatePersistentInputs(); // Populate the array of elements to persist
             renderTopics();
             const storedTemplates = localStorage.getItem('packgenTemplates');
             if (storedTemplates) {
                 savedTemplates = JSON.parse(storedTemplates);
             }
-            loadUIState(); 
+            loadUIState(); // This will now also trigger slider display updates
             updateModeControls(); 
-            updateComplexityValueDisplay(); 
+            initializeMasterToggles(); // Initialize master toggles and their controlled elements AFTER loadUIState
+
+            // Initial display updates for sliders that might not be covered by loadUIState's generic 'input' event if no saved state
+            updateComplexityValueDisplay();
             updateSlangLevelDisplay();
-            updateDetailLevelDisplay(); 
-            updateCreativityLevelDisplay(); 
+            updateDetailLevelDisplay();
+            updateCreativityLevelDisplay();
             updateTopicInfluenceDisplay();
+            if(timingSlider && timingValue) timingValue.textContent = timingTextLabels[timingSlider.value] || "Normal";
+            if(sarcasmSlider && sarcasmValue) sarcasmValue.textContent = sarcasmTextLabels[sarcasmSlider.value] || "Balanced";
+            if(visualImagerySlider && visualImageryValue) visualImageryValue.textContent = visualImageryTextLabels[visualImagerySlider.value] || "3";
+            if(absurditySlider && absurdityValue) absurdityValue.textContent = absurditySlider.value;
+            if(shockValueSlider && shockValueLabel) shockValueLabel.textContent = shockValueSlider.value;
+             // Ensure dependent slider labels are updated after loadUIState might have changed their values
+            if(jokeLengthSlider) jokeLengthSlider.dispatchEvent(new Event('input'));
+
+
         }
 
         async function handleGenerate() {
@@ -2577,60 +2715,148 @@ Suggested Topics:`;
             const allControls = document.querySelectorAll('#pov-selector button, .advanced-controls-panel button, .advanced-controls-panel input, .advanced-controls-panel select, .advanced-controls-panel textarea, .switch input');
             allControls.forEach(c => { if(c.id !== 'generate-btn') c.disabled = true; });
 
-            // Consolidate all parameters into a single object to pass to generateAIPack
             const generationParams = {
-                // Generation Tab
+                // --- Parameters always active or from top-level controls ---
                 timing: document.getElementById('timing-slider').value,
                 verbosityStyle: document.getElementById('verbosity-style').value,
-                sarcasmLevel: document.getElementById('sarcasm-level-slider').value,
-                realismSurrealism: document.getElementById('realism-vs-surrealism').value,
-                visualImagery: document.getElementById('visual-imagery-slider').value,
-                logicalCoherence: document.getElementById('logical-coherence-toggle').value,
-                exaggerationMode: document.getElementById('exaggeration-mode').value,
-                creativityLevel: creativityLevelSlider.value, // Was missing from explicit pass-through
-                themeRandomizer: document.getElementById('theme-randomizer-toggle').checked,
-                preferredNounCount: document.getElementById('noun-count').value,
-                verbDensity: document.getElementById('verb-density').value,
-                sentenceRhythm: document.getElementById('sentence-rhythm').value,
-                backstory: document.getElementById('backstory-injection').value.trim(),
-                emotionArc: document.getElementById('emotion-arc').value,
-                shockValue: document.getElementById('shock-value').value,
-                callbackCount: document.getElementById('callback-count').value,
-                conflictType: document.getElementById('conflict-type').value,
-                generationSeed: document.getElementById('generation-seed').value.trim(),
-
-                // Topics Tab
-                topicPriorityMode: document.getElementById('topic-priority-mode').value,
-                topicInfluence: topicInfluenceSlider.value, // Was missing from explicit pass-through
+                creativityLevel: creativityLevelSlider.value,
                 excludedTopics: excludeTopicsTextarea.value.trim(),
-
-                // Content Tab (already in contentParams, but let's be explicit for clarity)
-                guaranteedWords: guaranteedWordsInput.value.trim(),
-                startsWith: startsWithTextarea.value.split('\n').map(p => p.trim()).filter(p => p).sort(() => 0.5 - Math.random())[0],
                 scenario: currentScenarioInput.value.trim(),
-                culturalContext: culturalContextTextarea.value.split('\n').map(c => c.trim()).filter(c => c).sort(() => 0.5 - Math.random())[0],
                 minWords: minWordsInput.value.trim(),
                 maxWords: maxWordsInput.value.trim(),
                 complexityLevel: complexityLevelSlider.value,
                 jokeTone: jokeToneSelect.value,
                 humorType: humorTypeSelect.value,
-                targetAudience: targetAudienceInput.value.trim(),
-                jokeStructure: jokeStructureSelect.value,
+                jokeStructure: jokeStructureSelect.value, // This was in Content, but seems general enough
                 slangLevel: slangLevelSlider.value,
-                narratorPersona: narratorPersonaInput.value.trim(),
-                forbiddenConstraints: forbiddenConstraintsTextarea.value.trim(),
-                excludedWords: excludedWordsTextarea.value.trim(),
-                punchlineStyle: document.getElementById('punchline-style').value, // Added
-                sentenceStructure: document.getElementById('sentence-structure').value, // Added
-
-                // Advanced Tab
-                humorAlgorithmMode: document.getElementById('humor-algorithm-mode').value,
-                // entropyBias: document.getElementById('entropy-bias').value, // Not directly usable with current API
-
-                // From existing direct reads or globals in generateAIPack that are params-like
                 detailLevel: detailLevelSlider.value,
                 avoidRepetition: avoidRepetitionToggle.checked,
                 inspirationalSource: inspirationalSourceTextarea.value.trim(),
+                humorAlgorithmMode: document.getElementById('humor-algorithm-mode').value,
+
+                // --- Parameters conditional on Master Toggles ---
+
+                // Generation Tab -> Fine-Tuning Controls
+                sarcasmLevel: '3',
+                realismSurrealism: 'balanced',
+                visualImagery: '3',
+                logicalCoherence: 'auto',
+                exaggerationMode: 'mild',
+
+                // Generation Tab -> Advanced Generation Parameters
+                themeRandomizer: false,
+                preferredNounCount: "",
+                verbDensity: '3',
+                sentenceRhythm: 'varied',
+                backstory: "",
+                emotionArc: 'neutral',
+                shockValue: '3',
+                callbackCount: '0',
+                conflictType: 'internal',
+                generationSeed: "",
+
+                // Generation Tab -> Output Formatting Controls
+                punctuationStyle: 'default',
+                sentenceLengthVariation: 'default',
+
+                // Topics Tab -> Advanced Topic Specifications
+                topicPriorityMode: 'balanced',
+                topicInfluence: '3',
+                topicInteractionNotes: "",
+                subthemeSpecification: "",
+
+                // Content Tab -> Narrative & Structural Controls
+                punchlineStyle: 'twist',
+                sentenceStructure: 'any',
+                narrativeStructure: 'default',
+
+                // Content Tab -> Linguistic Style Controls
+                posEmphasizeAdjectives: false,
+                posMinimizeAdverbs: false,
+                posEnsureStrongVerbs: false,
+
+                // Content Tab -> Specific Content Inputs & Constraints
+                guaranteedWords: "",
+                startsWith: "",
+                culturalContext: "",
+                targetAudience: "",
+                narratorPersona: "",
+                forbiddenConstraints: "",
+                excludedWords: "",
+                constraintNoRhetorical: false,
+                constraintClearSubject: false,
+
+                // Advanced Tab -> Experimental API Tuning
+                entropyBias: '5',
+            };
+
+            // Update params based on master toggle states
+            if (document.getElementById('enableFineTuningToggle').checked) {
+                generationParams.sarcasmLevel = document.getElementById('sarcasm-level-slider').value;
+                generationParams.realismSurrealism = document.getElementById('realism-vs-surrealism').value;
+                generationParams.visualImagery = document.getElementById('visual-imagery-slider').value;
+                generationParams.logicalCoherence = document.getElementById('logical-coherence-toggle').value;
+                generationParams.exaggerationMode = document.getElementById('exaggeration-mode').value;
+            }
+
+            if (document.getElementById('enableAdvancedGenParamsToggle').checked) {
+                generationParams.themeRandomizer = document.getElementById('theme-randomizer-toggle').checked;
+                generationParams.preferredNounCount = document.getElementById('noun-count').value;
+                generationParams.verbDensity = document.getElementById('verb-density').value;
+                generationParams.sentenceRhythm = document.getElementById('sentence-rhythm').value;
+                generationParams.backstory = document.getElementById('backstory-injection').value.trim();
+                generationParams.emotionArc = document.getElementById('emotion-arc').value;
+                generationParams.shockValue = document.getElementById('shock-value').value;
+                generationParams.callbackCount = document.getElementById('callback-count').value;
+                generationParams.conflictType = document.getElementById('conflict-type').value;
+                generationParams.generationSeed = document.getElementById('generation-seed').value.trim();
+            }
+
+            if (document.getElementById('enableOutputFormattingToggle').checked) {
+                generationParams.punctuationStyle = document.getElementById('punctuation-style').value;
+                generationParams.sentenceLengthVariation = document.getElementById('sentence-length-variation').value;
+            }
+
+            if (document.getElementById('enableAdvancedTopicSpecsToggle').checked) {
+                generationParams.topicPriorityMode = document.getElementById('topic-priority-mode').value;
+                generationParams.topicInfluence = topicInfluenceSlider.value;
+                generationParams.topicInteractionNotes = document.getElementById('topic-interaction-notes').value.trim();
+                generationParams.subthemeSpecification = document.getElementById('subtheme-specification').value.trim();
+            }
+
+            if (document.getElementById('enableNarrativeControlToggle').checked) {
+                generationParams.punchlineStyle = document.getElementById('punchline-style').value;
+                generationParams.sentenceStructure = document.getElementById('sentence-structure').value;
+                generationParams.narrativeStructure = document.getElementById('narrative-structure').value;
+            }
+
+            if (document.getElementById('enableLinguisticStyleToggle').checked) {
+                generationParams.posEmphasizeAdjectives = document.getElementById('pos-emphasize-adjectives').checked;
+                generationParams.posMinimizeAdverbs = document.getElementById('pos-minimize-adverbs').checked;
+                generationParams.posEnsureStrongVerbs = document.getElementById('pos-ensure-strong-verbs').checked;
+            }
+
+            if (document.getElementById('enableAdvancedContentInputsToggle').checked) {
+                generationParams.guaranteedWords = guaranteedWordsInput.value.trim();
+                generationParams.startsWith = startsWithTextarea.value.split('\n').map(p => p.trim()).filter(p => p).sort(() => 0.5 - Math.random())[0] || "";
+                generationParams.culturalContext = culturalContextTextarea.value.split('\n').map(c => c.trim()).filter(c => c).sort(() => 0.5 - Math.random())[0] || "";
+                generationParams.targetAudience = targetAudienceInput.value.trim();
+                generationParams.narratorPersona = narratorPersonaInput.value.trim();
+                generationParams.forbiddenConstraints = forbiddenConstraintsTextarea.value.trim();
+                generationParams.excludedWords = excludedWordsTextarea.value.trim();
+                generationParams.constraintNoRhetorical = document.getElementById('constraint-no-rhetorical').checked;
+                generationParams.constraintClearSubject = document.getElementById('constraint-clear-subject').checked;
+            }
+
+            if (document.getElementById('enableExperimentalApiTuningToggle').checked) {
+                generationParams.entropyBias = document.getElementById('entropy-bias').value;
+            }
+
+            // From existing direct reads or globals in generateAIPack that are params-like
+            // These were already moved to the "always active" section above, or are covered.
+            // detailLevel: detailLevelSlider.value, // Always enabled
+                avoidRepetition: avoidRepetitionToggle.checked, // Always enabled
+                inspirationalSource: inspirationalSourceTextarea.value.trim(), // Always enabled
             };
 
 
@@ -2662,7 +2888,7 @@ Suggested Topics:`;
                             referenceJoke: lastGeneratedJoke,
                             absurdityLevel: currentAbsurdity,
                             isLocked: isThemeLocked,
-                            ...generationParams, // Pass the consolidated params
+                            ...generationParams,
                         });
                         
                         if (newJoke && !newJoke.startsWith("AI safety filters") && !newJoke.startsWith("Failed to generate") && !newJoke.startsWith("Blocked:")) {
@@ -2700,7 +2926,7 @@ Suggested Topics:`;
                                 referenceJoke: lastGeneratedJoke,
                                 absurdityLevel: absurdity,
                                 isLocked: isThemeLocked,
-                                ...generationParams, // Pass the consolidated params
+                                ...generationParams,
                             });
                             clearInterval(scrambleInterval);
                             
@@ -2730,6 +2956,13 @@ Suggested Topics:`;
             generateBtn.disabled = false;
             spinner.style.display = 'none'; 
             allControls.forEach(c => { if(c.id !== 'generate-btn') c.disabled = false; });
+            // Re-apply disabled states based on master toggles after generation might have re-enabled all
+             masterToggleConfig.forEach(config => {
+                const masterToggle = document.getElementById(config.toggleId);
+                if (masterToggle) {
+                    setControlsDisabled(config.containerId, !masterToggle.checked);
+                }
+            });
             updateModeControls();
             saveUIState(); 
         }

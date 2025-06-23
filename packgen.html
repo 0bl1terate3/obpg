@@ -605,6 +605,7 @@
 <div class="mb-3">
 <label class="block text-xs text-slate-400 mb-1" for="verbosity-style">Verbosity Style:</label>
 <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="verbosity-style">
+<option value="default" selected>Default/AI Choice</option>
 <option value="concise">Concise</option>
 <option value="narrative">Narrative</option>
 <option value="rambling">Rambling</option>
@@ -702,7 +703,7 @@
 </div>
 <div class="mb-3">
   <label class="block text-xs text-slate-400 mb-1" for="noun-count">Preferred Noun Count:</label>
-  <input id="noun-count" type="number" min="1" max="50" value="10" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs" />
+  <input id="noun-count" type="number" min="1" max="50" value="" placeholder="AI Choice" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs" />
 </div>
 <div class="mb-3">
   <label class="block text-xs text-slate-400 mb-1" for="verb-density">Verb Density:</label>
@@ -711,7 +712,7 @@
 <div class="mb-3">
   <label class="block text-xs text-slate-400 mb-1" for="sentence-rhythm">Sentence Rhythm:</label>
   <select id="sentence-rhythm" class="w-full text-xs bg-slate-800 border border-slate-600 rounded p-1">
-    <option value="varied">Varied</option>
+    <option value="varied" selected>Varied</option>
     <option value="short-punchy">Short & Punchy</option>
     <option value="long-runons">Long Run-ons</option>
     <option value="musical">Musical Flow</option>
@@ -736,7 +737,7 @@
 </div>
 <div class="mb-3">
   <label class="block text-xs text-slate-400 mb-1" for="callback-count">Number of Callbacks:</label>
-  <input type="number" id="callback-count" min="0" max="10" value="1" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs"/>
+  <input type="number" id="callback-count" min="0" max="10" value="0" class="w-full bg-slate-800 border border-slate-600 rounded p-1 text-xs"/>
 </div>
 <div class="mb-3">
   <label class="block text-xs text-slate-400 mb-1" for="conflict-type">Primary Conflict Type:</label>
@@ -2117,45 +2118,94 @@ Suggested Topics:`;
         }
 
         // --- UI STATE PERSISTENCE ---
-        const persistentInputs = [
-            { element: absurditySlider, type: 'value' },
-            { element: themeLockToggle, type: 'checked' },
-            { element: batchToggle, type: 'checked' },
-            { element: batchSteps, type: 'value' },
-            { element: guaranteedWordsInput, type: 'value' },
-            { element: startsWithTextarea, type: 'value' },
-            { element: scenarioListTextarea, type: 'value' },
-            { element: currentScenarioInput, type: 'value' },
-            { element: culturalContextTextarea, type: 'value' },
-            { element: inspirationalSourceTextarea, type: 'value' }, 
-            { element: forbiddenConstraintsTextarea, type: 'value' },
-            { element: excludedWordsTextarea, type: 'value' },
-            { element: themeColorPicker, type: 'value' },
-            { element: minWordsInput, type: 'value' },
-            { element: maxWordsInput, type: 'value' },
-            { element: complexityLevelSlider, type: 'value' },
-            { element: jokeToneSelect, type: 'value' },
-            { element: humorTypeSelect, type: 'value' },
-            { element: targetAudienceInput, type: 'value' },
-            { element: jokeStructureSelect, type: 'value' },
-            { element: slangLevelSlider, type: 'value' },
-            { element: narratorPersonaInput, type: 'value' },
-            { element: detailLevelSlider, type: 'value' },
-            { element: creativityLevelSlider, type: 'value' },
-            { element: avoidRepetitionToggle, type: 'checked' },
-            { element: topicInfluenceSlider, type: 'value' },
-            { element: excludeTopicsTextarea, type: 'value' }
-        ];
+        let persistentInputs = []; // Will be populated in initializeUI
+
+        function populatePersistentInputs() {
+            persistentInputs = [
+                // Generation Tab
+                { element: document.getElementById('timing-slider'), type: 'value' },
+                { element: document.getElementById('verbosity-style'), type: 'value' },
+                { element: themeLockToggle, type: 'checked' },
+                { element: batchToggle, type: 'checked' },
+                { element: absurditySlider, type: 'value' },
+                { element: batchSteps, type: 'value' },
+                { element: document.getElementById('joke-length-slider'), type: 'value' },
+                { element: detailLevelSlider, type: 'value' },
+                { element: creativityLevelSlider, type: 'value' },
+                { element: avoidRepetitionToggle, type: 'checked' },
+                { element: document.getElementById('sarcasm-level-slider'), type: 'value' },
+                { element: document.getElementById('realism-vs-surrealism'), type: 'value' },
+                { element: document.getElementById('visual-imagery-slider'), type: 'value' },
+                { element: document.getElementById('logical-coherence-toggle'), type: 'value' },
+                { element: document.getElementById('exaggeration-mode'), type: 'value' },
+                { element: document.getElementById('theme-randomizer-toggle'), type: 'checked' },
+                { element: document.getElementById('noun-count'), type: 'value' },
+                { element: document.getElementById('verb-density'), type: 'value' },
+                { element: document.getElementById('sentence-rhythm'), type: 'value' },
+                { element: document.getElementById('backstory-injection'), type: 'value' },
+                { element: document.getElementById('emotion-arc'), type: 'value' },
+                { element: document.getElementById('shock-value'), type: 'value' },
+                { element: document.getElementById('callback-count'), type: 'value' },
+                { element: document.getElementById('conflict-type'), type: 'value' },
+                { element: document.getElementById('generation-seed'), type: 'value' },
+                { element: document.getElementById('punctuation-style'), type: 'value' },
+                { element: document.getElementById('sentence-length-variation'), type: 'value' },
+
+                // Topics Tab
+                { element: document.getElementById('topic-priority-mode'), type: 'value' },
+                { element: topicInfluenceSlider, type: 'value' },
+                { element: excludeTopicsTextarea, type: 'value' },
+                { element: document.getElementById('topic-interaction-notes'), type: 'value' },
+                { element: document.getElementById('subtheme-specification'), type: 'value' },
+
+                // Content Tab
+                { element: document.getElementById('punchline-style'), type: 'value' },
+                { element: document.getElementById('sentence-structure'), type: 'value' },
+                { element: guaranteedWordsInput, type: 'value' },
+                { element: startsWithTextarea, type: 'value' },
+                { element: scenarioListTextarea, type: 'value' },
+                { element: currentScenarioInput, type: 'value' },
+                { element: culturalContextTextarea, type: 'value' },
+                { element: minWordsInput, type: 'value' },
+                { element: maxWordsInput, type: 'value' },
+                { element: complexityLevelSlider, type: 'value' },
+                { element: jokeToneSelect, type: 'value' },
+                { element: humorTypeSelect, type: 'value' },
+                { element: jokeStructureSelect, type: 'value' },
+                { element: slangLevelSlider, type: 'value' },
+                { element: narratorPersonaInput, type: 'value' },
+                { element: targetAudienceInput, type: 'value' },
+                { element: forbiddenConstraintsTextarea, type: 'value' },
+                { element: excludedWordsTextarea, type: 'value' },
+                { element: document.getElementById('pos-emphasize-adjectives'), type: 'checked' },
+                { element: document.getElementById('pos-minimize-adverbs'), type: 'checked' },
+                { element: document.getElementById('pos-ensure-strong-verbs'), type: 'checked' },
+                { element: document.getElementById('narrative-structure'), type: 'value' },
+                { element: document.getElementById('constraint-no-rhetorical'), type: 'checked' },
+                { element: document.getElementById('constraint-clear-subject'), type: 'checked' },
+
+                // Advanced Tab
+                { element: document.getElementById('humor-algorithm-mode'), type: 'value' },
+                { element: document.getElementById('entropy-bias'), type: 'value' },
+                { element: themeColorPicker, type: 'value' },
+                { element: inspirationalSourceTextarea, type: 'value' },
+            ];
+        }
+
 
         function saveUIState() {
             const state = {};
             persistentInputs.forEach(item => {
-                state[item.element.id] = item.element[item.type];
+                if (item.element) { // Defensive check
+                    state[item.element.id] = item.element[item.type];
+                } else {
+                    console.warn("Missing element for ID during saveUIState:", item.element); // Should not happen if IDs are correct
+                }
             });
-            state.selectedPov = povSelector.querySelector('.toggle-btn.active').dataset.pov;
+            state.selectedPov = povSelector.querySelector('.toggle-btn.active')?.dataset.pov;
             state.currentMode = currentMode;
             state.selectedTopics = selectedTopics;
-            state.activeTab = tabsNav.querySelector('.tab-btn.active').dataset.tab; 
+            state.activeTab = tabsNav.querySelector('.tab-btn.active')?.dataset.tab;
             localStorage.setItem('packgenUIState', JSON.stringify(state));
         }
 
@@ -2165,12 +2215,22 @@ Suggested Topics:`;
                 const state = JSON.parse(savedState);
                 
                 persistentInputs.forEach(item => {
-                    if (state[item.element.id] !== undefined) {
+                    if (item.element && state[item.element.id] !== undefined) {
                         item.element[item.type] = state[item.element.id];
+                        // Special handling for sliders to update their visual display values
+                        if (item.element.type === 'range' || item.element.classList.contains('slider-thumb')) {
+                            const event = new Event('input', { bubbles: true, cancelable: true });
+                            item.element.dispatchEvent(event);
+                        }
+                        // Explicitly update absurdity global variable as it's used directly elsewhere
                         if (item.element.id === 'absurdity-slider') {
-                            absurdityValue.textContent = state[item.element.id];
                             absurdity = state[item.element.id];
                         }
+                    } else if (item.element && state[item.element.id] === undefined) {
+                        // If a control was saved previously but now it's not in the new saved state
+                        // (e.g. a feature removed), it will just keep its HTML default. This is fine.
+                    } else if (!item.element) {
+                        console.warn("Missing element for ID during loadUIState:", item.element);
                     }
                 });
 
@@ -2220,14 +2280,14 @@ Suggested Topics:`;
 
         // --- Clear All Content Inputs Functionality ---
         clearContentInputsBtn.addEventListener('click', () => {
-            showCustomPrompt("Are you sure you want to clear all content-related input fields? This action cannot be undone.", (confirm) => {
-                if (confirm) {
+            showCustomPrompt("Are you sure you want to clear all content-related input fields? This action cannot be undone.", (confirmValue) => { // Changed confirm to confirmValue
+                if (confirmValue && confirmValue.toLowerCase() === 'yes') { // Example: require explicit "yes"
                     guaranteedWordsInput.value = '';
                     startsWithTextarea.value = '';
                     scenarioListTextarea.value = '';
                     currentScenarioInput.value = '';
                     culturalContextTextarea.value = '';
-                    inspirationalSourceTextarea.value = ''; 
+                    // inspirationalSourceTextarea.value = ''; // Keep this one maybe? Or clear it. User decision.
                     forbiddenConstraintsTextarea.value = '';
                     excludedWordsTextarea.value = '';
                     minWordsInput.value = 5; 
@@ -2235,15 +2295,26 @@ Suggested Topics:`;
                     complexityLevelSlider.value = 5; 
                     jokeToneSelect.value = 'any'; 
                     humorTypeSelect.value = 'any'; 
-                    targetAudienceInput.value = ''; 
+                    targetAudienceInput.value = '';
+                    document.getElementById('pos-emphasize-adjectives').checked = false;
+                    document.getElementById('pos-minimize-adverbs').checked = false;
+                    document.getElementById('pos-ensure-strong-verbs').checked = false;
+                    document.getElementById('narrative-structure').value = 'default';
+                    document.getElementById('constraint-no-rhetorical').checked = false;
+                    document.getElementById('constraint-clear-subject').checked = false;
+
                     updateComplexityValueDisplay(); 
+                    // Potentially trigger 'input' events for sliders if their displays need updating
+                    complexityLevelSlider.dispatchEvent(new Event('input'));
                     saveUIState(); 
                     showCustomAlert("Content inputs cleared.");
+                } else if (confirmValue) { // If they typed something but not "yes"
+                     showCustomAlert("Clear operation cancelled. Please type 'yes' to confirm.");
                 }
-            });
+            }, "Type 'yes' to confirm clearing content inputs:"); // Added prompt message for showCustomPrompt
         });
 
-        // --- Complexity Value Display Update ---
+        // --- Value Display Updates for Sliders ---
         const complexityLabels = {
             1: 'Very Simple', 2: 'Simple', 3: 'Basic', 4: 'Casual', 5: 'Medium',
             6: 'Standard', 7: 'Advanced', 8: 'Complex', 9: 'Sophisticated', 10: 'Highly Academic'

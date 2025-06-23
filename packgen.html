@@ -1423,18 +1423,27 @@ jokeLengthSlider.addEventListener('input', () => {
         async function generateAIPack(params = {}) {
             const { mode = 'single', referenceJoke = null, absurdityLevel = 5, isLocked = false } = params;
             const activePovBtn = povSelector.querySelector('.toggle-btn.active');
-            const pov = activePovBtn ? activePovBtn.dataset.pov : 'second'; 
+            const pov = activePovBtn ? activePovBtn.dataset.pov : 'second';
 
             const povInstructions = {
-            second: '- **Point of View:** Second-person direct address (e.g., "You are...", "yo...").',
-            third: '- **Point of View:** Third-person observational (e.g., "He once...", "his uncle...").',
-            first: '- **Point of View:** First-person anecdote (e.g., "I saw him...", "I remember when...").'
-        };
+                second: '- **Point of View:** Second-person direct address (e.g., "You are...", "yo...").',
+                third: '- **Point of View:** Third-person observational (e.g., "He once...", "his uncle...").',
+                first: '- **Point of View:** First-person anecdote (e.g., "I saw him...", "I remember when...").'
+            };
 
-        const jokeSource = inspirationalSourceTextarea.value.trim();
+            const jokeSource = inspirationalSourceTextarea.value.trim();
+            let currentSelectedTopics = [...selectedTopics]; // Operate on a copy for this generation
 
-        let styleBlock = '';
+            // Handle Theme Randomizer
+            if (params.themeRandomizer && availableTopics.length > 0) {
+                const shuffledAvailable = [...availableTopics].sort(() => 0.5 - Math.random());
+                const randomCount = Math.min(shuffledAvailable.length, 3); // Pick up to 3 random topics
+                currentSelectedTopics = shuffledAvailable.slice(0, randomCount);
+                // Optionally, could combine with existing selected or replace them. For now, let's say it overrides.
+            }
 
+
+            let styleBlock = '';
             if (jokeSource) {
                styleBlock = `// STYLE INSTRUCTIONS //
 - Your most critical instruction is to perfectly mimic the writing style, tone, structure, slang, grammar, punctuation, capitalization, and overall feel of the text provided under "Joke Source Style Guide".
@@ -1472,43 +1481,89 @@ ${exampleJokes}
   * Avoid all previously used elements and try to use the suggested new variations.
   * Do NOT use any introductory phrases like "Here's a joke:".
   * Just output the raw joke text itself.`;
-        }
+            }
 
-        let configBlock = `// JOKE CONFIGURATION //
+            let configBlock = `// JOKE CONFIGURATION //
 ${povInstructions[pov]}
 - **Absurdity Level:** ${absurdityLevel}/10.`;
 
-        // Add existing UI controls to the config block
-        const minWords = parseInt(params.minWords || 1);
-        const maxWords = parseInt(params.maxWords || 100);
-        if (minWords > 0 || maxWords < 100) {
-            configBlock += `\n- **Length:** Between ${minWords} and ${maxWords} words.`;
-        }
-        const complexityLabelsMap = { 1: 'very simple', 2: 'simple', 3: 'basic', 4: 'casual', 5: 'medium', 6: 'standard', 7: 'advanced', 8: 'complex', 9: 'sophisticated', 10: 'highly academic' };
-        configBlock += `\n- **Complexity/Vocabulary:** ${complexityLabelsMap[params.complexityLevel] || 'medium'}.`;
-        if (params.jokeTone && params.jokeTone !== 'any') configBlock += `\n- **Tone/Mood:** ${params.jokeTone}.`;
-        if (params.humorType && params.humorType !== 'any') configBlock += `\n- **Humor Type:** ${params.humorType}.`;
-        if (params.targetAudience) configBlock += `\n- **Target Audience:** ${params.targetAudience}.`;
-        const detailLevelLabels = { 1: 'very brief and concise', 2: 'brief', 3: 'standard', 4: 'detailed', 5: 'highly descriptive and elaborate' };
-        
-        // New customization options
-        if (params.jokeStructure && params.jokeStructure !== 'any') configBlock += `\n- **Joke Structure:** Must be a ${params.jokeStructure} format.`;
-        const slangLevelLabelsMap = { 1: 'none', 2: 'light', 3: 'normal', 4: 'heavy', 5: 'maximum' };
-        configBlock += `\n- **Slang/Jargon Level:** ${slangLevelLabelsMap[params.slangLevel] || 'normal'}.`;
-        if (params.narratorPersona) configBlock += `\n- **Narrator Persona:** The joke should be told from the perspective of: "${params.narratorPersona}". This should influence the tone and word choice.`;
+            // === Generation Tab Parameters ===
+            const timingLabels = { 1: 'very slow', 2: 'slow', 3: 'normal', 4: 'fast', 5: 'very fast' };
+            if (params.timing) configBlock += `\n- **Pacing:** ${timingLabels[params.timing] || 'normal'}.`;
+            if (params.verbosityStyle) configBlock += `\n- **Verbosity:** ${params.verbosityStyle}.`;
 
-        configBlock += `\n- **Detail Level:** ${detailLevelLabels[params.detailLevel] || 'standard'}.`;
-        if (params.guaranteedWords) configBlock += `\n- **Guaranteed Words:** MUST contain: ${params.guaranteedWords}.`;
-        if (params.startsWith) configBlock += `\n- **Starts With:** MUST start with: "${params.startsWith}".`;
-        if (params.scenario) configBlock += `\n- **Scenario:** Must be set in: "${params.scenario}".`;
-        if (params.culturalContext) configBlock += `\n- **Cultural Context:** Must reference: "${params.culturalContext}".`;
-        if (params.forbiddenConstraints) configBlock += `\n- **Forbidden Constraints:** MUST NOT mention: ${params.forbiddenConstraints}.`;
-        if (params.excludedWords) configBlock += `\n- **Excluded Words:** MUST NOT contain: ${params.excludedWords}.`;
-        if (params.excludedTopics) configBlock += `\n- **Excluded Topics:** MUST NOT be about: ${params.excludedTopics}.`;
-        if (selectedTopics.length > 0) configBlock += `\n- **General Topics:** Should incorporate: ${selectedTopics.join(', ')}.`;
+            const sarcasmLabels = { 1: 'none', 2: 'low', 3: 'medium', 4: 'high', 5: 'extreme' };
+            if (params.sarcasmLevel) configBlock += `\n- **Sarcasm:** ${sarcasmLabels[params.sarcasmLevel] || 'medium'}.`;
+            if (params.realismSurrealism) configBlock += `\n- **Style:** ${params.realismSurrealism}.`;
 
-        // Mode specific instructions
-        switch(mode) {
+            const visualImageryLabels = { 1: 'low', 2: 'subtle', 3: 'moderate', 4: 'high', 5: 'intense' };
+            if (params.visualImagery) configBlock += `\n- **Visual Imagery:** ${visualImageryLabels[params.visualImagery] || 'moderate'}.`;
+            if (params.logicalCoherence) configBlock += `\n- **Coherence:** ${params.logicalCoherence}.`;
+            if (params.exaggerationMode) configBlock += `\n- **Exaggeration:** ${params.exaggerationMode}.`;
+
+            const creativityLevelLabelsPrompt = { 1: 'very strict adherence to instructions', 2: 'balanced approach', 3: 'creative interpretation', 4: 'highly innovative and novel', 5: 'radically unconventional' };
+            if (params.creativityLevel) configBlock += `\n- **Creativity Approach:** ${creativityLevelLabelsPrompt[params.creativityLevel] || 'balanced approach'}.`;
+
+            if (params.preferredNounCount) configBlock += `\n- **Noun Count (approx):** ${params.preferredNounCount}.`;
+
+            const verbDensityLabels = { 1: 'low', 2: 'sparse', 3: 'medium', 4: 'dense', 5: 'very high' };
+            if (params.verbDensity) configBlock += `\n- **Verb Density:** ${verbDensityLabels[params.verbDensity] || 'medium'}.`;
+            if (params.sentenceRhythm) configBlock += `\n- **Sentence Rhythm:** ${params.sentenceRhythm}.`;
+            if (params.backstory) configBlock += `\n- **Backstory:** "${params.backstory}".`;
+            if (params.emotionArc) configBlock += `\n- **Emotion Arc:** ${params.emotionArc}.`;
+
+            const shockValueLabels = { 1: 'mild', 2: 'noticeable', 3: 'moderate', 4: 'strong', 5: 'extreme' };
+            if (params.shockValue) configBlock += `\n- **Shock Value:** ${shockValueLabels[params.shockValue] || 'moderate'}.`;
+            if (params.callbackCount > 0) configBlock += `\n- **Callbacks Requested:** ${params.callbackCount} (if fits naturally).`;
+            if (params.conflictType) configBlock += `\n- **Primary Conflict:** ${params.conflictType}.`;
+            if (params.generationSeed) configBlock += `\n- **Thematic Seed (for inspiration only):** ${params.generationSeed}.`;
+
+
+            // === Topics Tab Parameters ===
+            if (params.topicPriorityMode) configBlock += `\n- **Topic Adherence:** ${params.topicPriorityMode}.`;
+            const topicInfluenceLabelsPrompt = { 1: 'subtle hint', 2: 'moderate influence', 3: 'strong focus', 4: 'very strict adherence', 5: 'absolute core' };
+            if (params.topicInfluence) configBlock += `\n- **Topic Influence:** ${topicInfluenceLabelsPrompt[params.topicInfluence] || 'strong focus'}.`;
+            if (params.excludedTopics) configBlock += `\n- **Excluded Topics:** MUST NOT be about: ${params.excludedTopics}.`; // Already existed, ensure it's using passed param
+            if (currentSelectedTopics.length > 0) configBlock += `\n- **General Topics:** Should incorporate: ${currentSelectedTopics.join(', ')}.`;
+
+
+            // === Content Tab Parameters (Existing and New) ===
+            const minWords = parseInt(params.minWords || 1);
+            const maxWords = parseInt(params.maxWords || 100);
+            if (minWords > 0 || maxWords < 100) { // Keep this logic
+                configBlock += `\n- **Length:** Between ${minWords} and ${maxWords} words.`;
+            }
+            const complexityLabelsMap = { 1: 'very simple', 2: 'simple', 3: 'basic', 4: 'casual', 5: 'medium', 6: 'standard', 7: 'advanced', 8: 'complex', 9: 'sophisticated', 10: 'highly academic' };
+            configBlock += `\n- **Complexity/Vocabulary:** ${complexityLabelsMap[params.complexityLevel] || 'medium'}.`;
+            if (params.jokeTone && params.jokeTone !== 'any') configBlock += `\n- **Tone/Mood:** ${params.jokeTone}.`;
+            if (params.humorType && params.humorType !== 'any') configBlock += `\n- **Humor Type:** ${params.humorType}.`;
+            if (params.targetAudience) configBlock += `\n- **Target Audience:** ${params.targetAudience}.`;
+
+            const detailLevelLabels = { 1: 'very brief and concise', 2: 'brief', 3: 'standard', 4: 'detailed', 5: 'highly descriptive and elaborate' };
+            configBlock += `\n- **Detail Level:** ${detailLevelLabels[params.detailLevel] || 'standard'}.`;
+
+            if (params.punchlineStyle) configBlock += `\n- **Punchline Style:** ${params.punchlineStyle}.`;
+            if (params.sentenceStructure && params.sentenceStructure !== 'any') configBlock += `\n- **Sentence Structure:** ${params.sentenceStructure}.`;
+
+            const slangLevelLabelsMap = { 1: 'none', 2: 'light', 3: 'normal', 4: 'heavy', 5: 'maximum' };
+            configBlock += `\n- **Slang/Jargon Level:** ${slangLevelLabelsMap[params.slangLevel] || 'normal'}.`;
+            if (params.narratorPersona) configBlock += `\n- **Narrator Persona:** The joke should be told from the perspective of: "${params.narratorPersona}". This should influence the tone and word choice.`;
+
+            if (params.guaranteedWords) configBlock += `\n- **Guaranteed Words:** MUST contain: ${params.guaranteedWords}.`;
+            if (params.startsWith) configBlock += `\n- **Starts With:** MUST start with: "${params.startsWith}".`;
+            if (params.scenario) configBlock += `\n- **Scenario:** Must be set in: "${params.scenario}".`;
+            if (params.culturalContext) configBlock += `\n- **Cultural Context:** Must reference: "${params.culturalContext}".`;
+            if (params.forbiddenConstraints) configBlock += `\n- **Forbidden Constraints:** MUST NOT mention: ${params.forbiddenConstraints}.`;
+            if (params.excludedWords) configBlock += `\n- **Excluded Words:** MUST NOT contain: ${params.excludedWords}.`;
+
+
+            // === Advanced Tab Parameters ===
+            if (params.humorAlgorithmMode) configBlock += `\n- **Humor Algorithm:** ${params.humorAlgorithmMode}.`;
+            // entropy-bias is not directly mappable to Gemini API via simple prompt, will omit from configBlock for now.
+
+
+            // Mode specific instructions
+            switch(mode) {
             case 'story':
                 configBlock += `\n- **Mode:** This joke MUST be a direct continuation of the previous one's narrative. Previous joke: "${referenceJoke}".`;
                 break;
@@ -2333,29 +2388,62 @@ Suggested Topics:`;
             const allControls = document.querySelectorAll('#pov-selector button, .advanced-controls-panel button, .advanced-controls-panel input, .advanced-controls-panel select, .advanced-controls-panel textarea, .switch input');
             allControls.forEach(c => { if(c.id !== 'generate-btn') c.disabled = true; });
 
-            const contentParams = {
+            // Consolidate all parameters into a single object to pass to generateAIPack
+            const generationParams = {
+                // Generation Tab
+                timing: document.getElementById('timing-slider').value,
+                verbosityStyle: document.getElementById('verbosity-style').value,
+                sarcasmLevel: document.getElementById('sarcasm-level-slider').value,
+                realismSurrealism: document.getElementById('realism-vs-surrealism').value,
+                visualImagery: document.getElementById('visual-imagery-slider').value,
+                logicalCoherence: document.getElementById('logical-coherence-toggle').value,
+                exaggerationMode: document.getElementById('exaggeration-mode').value,
+                creativityLevel: creativityLevelSlider.value, // Was missing from explicit pass-through
+                themeRandomizer: document.getElementById('theme-randomizer-toggle').checked,
+                preferredNounCount: document.getElementById('noun-count').value,
+                verbDensity: document.getElementById('verb-density').value,
+                sentenceRhythm: document.getElementById('sentence-rhythm').value,
+                backstory: document.getElementById('backstory-injection').value.trim(),
+                emotionArc: document.getElementById('emotion-arc').value,
+                shockValue: document.getElementById('shock-value').value,
+                callbackCount: document.getElementById('callback-count').value,
+                conflictType: document.getElementById('conflict-type').value,
+                generationSeed: document.getElementById('generation-seed').value.trim(),
+
+                // Topics Tab
+                topicPriorityMode: document.getElementById('topic-priority-mode').value,
+                topicInfluence: topicInfluenceSlider.value, // Was missing from explicit pass-through
+                excludedTopics: excludeTopicsTextarea.value.trim(),
+
+                // Content Tab (already in contentParams, but let's be explicit for clarity)
                 guaranteedWords: guaranteedWordsInput.value.trim(),
                 startsWith: startsWithTextarea.value.split('\n').map(p => p.trim()).filter(p => p).sort(() => 0.5 - Math.random())[0],
                 scenario: currentScenarioInput.value.trim(),
                 culturalContext: culturalContextTextarea.value.split('\n').map(c => c.trim()).filter(c => c).sort(() => 0.5 - Math.random())[0],
-                inspirationalSource: inspirationalSourceTextarea.value.trim(), 
-                forbiddenConstraints: forbiddenConstraintsTextarea.value.trim(),
-                excludedWords: excludedWordsTextarea.value.trim(),
                 minWords: minWordsInput.value.trim(),
                 maxWords: maxWordsInput.value.trim(),
-                complexityLevel: complexityLevelSlider.value, 
+                complexityLevel: complexityLevelSlider.value,
                 jokeTone: jokeToneSelect.value,
                 humorType: humorTypeSelect.value,
                 targetAudience: targetAudienceInput.value.trim(),
                 jokeStructure: jokeStructureSelect.value,
                 slangLevel: slangLevelSlider.value,
                 narratorPersona: narratorPersonaInput.value.trim(),
+                forbiddenConstraints: forbiddenConstraintsTextarea.value.trim(),
+                excludedWords: excludedWordsTextarea.value.trim(),
+                punchlineStyle: document.getElementById('punchline-style').value, // Added
+                sentenceStructure: document.getElementById('sentence-structure').value, // Added
+
+                // Advanced Tab
+                humorAlgorithmMode: document.getElementById('humor-algorithm-mode').value,
+                // entropyBias: document.getElementById('entropy-bias').value, // Not directly usable with current API
+
+                // From existing direct reads or globals in generateAIPack that are params-like
                 detailLevel: detailLevelSlider.value,
-                creativityLevel: creativityLevelSlider.value,
                 avoidRepetition: avoidRepetitionToggle.checked,
-                topicInfluence: topicInfluenceSlider.value,
-                excludedTopics: excludeTopicsTextarea.value.trim()
+                inspirationalSource: inspirationalSourceTextarea.value.trim(),
             };
+
 
             canCopy = false;
             copyBtn.style.opacity = '0';
@@ -2385,7 +2473,7 @@ Suggested Topics:`;
                             referenceJoke: lastGeneratedJoke,
                             absurdityLevel: currentAbsurdity,
                             isLocked: isThemeLocked,
-                            ...contentParams,
+                            ...generationParams, // Pass the consolidated params
                         });
                         
                         if (newJoke && !newJoke.startsWith("AI safety filters") && !newJoke.startsWith("Failed to generate") && !newJoke.startsWith("Blocked:")) {
@@ -2423,7 +2511,7 @@ Suggested Topics:`;
                                 referenceJoke: lastGeneratedJoke,
                                 absurdityLevel: absurdity,
                                 isLocked: isThemeLocked,
-                                ...contentParams,
+                                ...generationParams, // Pass the consolidated params
                             });
                             clearInterval(scrambleInterval);
                             

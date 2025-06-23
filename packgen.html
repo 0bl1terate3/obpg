@@ -1373,10 +1373,10 @@
                 const toggle = document.getElementById(config.toggleId);
                 if (toggle) {
                     // Set initial state of child controls based on toggle's default checked state
-                    setControlsDisabled(config.containerId, config.childControlIds, !toggle.checked);
+                setControlsDisabled(config.containerId, config.childControlIds, !toggle.checked); // Corrected call
 
                     toggle.addEventListener('change', function() {
-                        setControlsDisabled(config.containerId, config.childControlIds, !this.checked);
+                    setControlsDisabled(config.containerId, config.childControlIds, !this.checked); // Corrected call
                     });
                 } else {
                     console.warn(`Master toggle with ID ${config.toggleId} not found.`);
@@ -1430,9 +1430,7 @@
         let entropyBiasSliderInstance; // This one can remain as is if only used locally in DOMContentLoaded
 
         // Newly added element variables - to be initialized in DOMContentLoaded
-        let minWordsInput, maxWordsInput, complexityLevelSlider, complexityValueSpan,
-            jokeToneSelect, humorTypeSelect, slangLevelSlider, slangLevelValueSpan,
-            scenarioListTextarea, currentScenarioInput, randomScenarioBtn, clearScenarioBtn, jokeStructureSelect;
+        let scenarioListTextarea, currentScenarioInput, randomScenarioBtn, clearScenarioBtn;
 
 
         // New Topics Tab elements
@@ -1516,26 +1514,35 @@
         const tabsContent = document.getElementById('tabs-content');
 
         // --- HELPER FUNCTIONS ---
-        function setControlsDisabled(containerId, isDisabled) {
-            const container = document.getElementById(containerId);
+// Modified setControlsDisabled to accept specific childControlIds
+        function setControlsDisabled(containerId, childControlIds, isDisabled) {            const container = document.getElementById(containerId);
             if (!container) return;
 
-            const controls = container.querySelectorAll('input:not([type="checkbox"][id*="enable"]), select, textarea, button:not([id*="enable"])');
-            controls.forEach(control => {
-                control.disabled = isDisabled;
-                 // For sliders that are part of a switch, disable their direct input if master is off
-                if (control.parentElement.classList.contains('switch') && control.type === 'checkbox') {
-                    // This case is for the inner input of a switch, already handled by disabling the input itself
-                } else if (isDisabled) {
-                    control.classList.add('opacity-50', 'cursor-not-allowed');
+            // Iterate over the specific childControlIds provided
+            childControlIds.forEach(id => {
+                const control = document.getElementById(id);
+                if (control) {
+                    control.disabled = isDisabled;
+                    // Apply/remove visual disabled state
+                    if (control.type === 'checkbox' && control.parentElement.classList.contains('switch')) {
+                        // For switch inputs, apply opacity to their parent label (the switch container)
+                        control.parentElement.style.opacity = isDisabled ? 0.5 : 1;
+                    } else {
+                        // For other controls, apply/remove classes
+                        if (isDisabled) {
+                            control.classList.add('opacity-50', 'cursor-not-allowed');
+                        } else {
+                            control.classList.remove('opacity-50', 'cursor-not-allowed');
+                        }
+                    }
+                    // Also update associated value spans for sliders
+                    const valueSpan = document.getElementById(id + '-value');
+                    if (valueSpan) {
+                        valueSpan.style.opacity = isDisabled ? 0.5 : 1;
+                    }
                 } else {
-                    control.classList.remove('opacity-50', 'cursor-not-allowed');
+                    console.warn(`Control with ID ${id} not found within container ${containerId}.`);
                 }
-            });
-             // Handle custom styled switches within the container (which are label > input + span)
-            const switchInputs = container.querySelectorAll('.switch input[type="checkbox"]');
-            switchInputs.forEach(switchInput => {
-                switchInput.disabled = isDisabled;
             });
         }
 
@@ -1892,15 +1899,15 @@ ${configBlock}
 
 Based on ALL of the above, generate the joke now.`;
 
-            const apiKey = ""; 
+            const apiKey = "AIzaSyANbsVl-HTscsB4ufQhQEztJEeDVQHVy0E"; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${apiKey}`;
             
             const payload = {
                 contents: [{ role: "user", parts: [{ text: prompt }] }],
                 generationConfig: { 
                     temperature: 1.0, 
-                    topP: 0.95
-                    // thinkingConfig: { thinkingBudget: 0 } // This line was causing the error - REMOVED
+                    topP: 0.95,
+                    thinkingConfig: { thinkingBudget: 0 } // This line was causing the error - REMOVED
                 },
                 safetySettings: [
                     {
@@ -1953,7 +1960,7 @@ Based on ALL of the above, generate the joke now.`;
 Suggested Topics:`;
             
             const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ role: "user", parts: [{ text: prompt }] }],
                 generationConfig: {
@@ -3053,7 +3060,7 @@ Suggested Topics:`;
              masterToggleConfig.forEach(config => {
                 const masterToggle = document.getElementById(config.toggleId);
                 if (masterToggle) {
-                    setControlsDisabled(config.containerId, !masterToggle.checked);
+                    setControlsDisabled(config.containerId, config.childControlIds, !masterToggle.checked);
                 }
             });
             updateModeControls();
@@ -3344,27 +3351,8 @@ Suggested Topics:`;
         // --- BOOT UP ANIMATION ---
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize shockValueSlider and shockValueLabel here
-            shockValueSlider = document.getElementById('shock-value'); // Renamed
-            shockValueLabel = document.getElementById('shock-value-label'); // Renamed
-
-            // Initialize newly added element variables
-            minWordsInput = document.getElementById('min-words');
-            maxWordsInput = document.getElementById('max-words');
-            complexityLevelSlider = document.getElementById('complexity-level');
-            complexityValueSpan = document.getElementById('complexity-value');
-            jokeToneSelect = document.getElementById('joke-tone');
-            humorTypeSelect = document.getElementById('humor-type');
-            slangLevelSlider = document.getElementById('slang-level-slider');
-            slangLevelValueSpan = document.getElementById('slang-level-value');
-            scenarioListTextarea = document.getElementById('scenario-list');
-            currentScenarioInput = document.getElementById('current-scenario');
-            randomScenarioBtn = document.getElementById('random-scenario-btn');
-            clearScenarioBtn = document.getElementById('clear-scenario-btn');
-            jokeStructureSelect = document.getElementById('joke-structure');
-
-            // Initialize other sliders that might have been missed for global vars if needed by event handlers outside this scope
-            entropyBiasSliderInstance = document.getElementById('entropy-bias'); // Example if it was needed globally
-
+            shockValueSlider = document.getElementById('shock-value');
+            shockValueLabel = document.getElementById('shock-value-label');
             initializeUI(); // This will call populatePersistentInputs among other things
             init3D();
             animate3D();

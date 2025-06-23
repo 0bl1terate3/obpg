@@ -1068,6 +1068,8 @@
 <div class="mb-3 hidden" id="oobabooga-endpoint-container">
 <label class="block text-xs text-slate-400 mb-1" for="oobabooga-endpoint">Oobabooga API Endpoint:</label>
 <input type="text" id="oobabooga-endpoint" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" placeholder="e.g., http://localhost:5000/api/v1/generate"/>
+<button class="toggle-btn !text-xs !py-1 !w-auto px-3 mt-2" id="test-oobabooga-connection-btn">Test Connection & Get Model</button>
+<p class="text-xs text-slate-400 mt-1" id="oobabooga-connection-status"></p>
 </div>
 
 <div class="mb-3">
@@ -1343,6 +1345,8 @@
         const backendSelector = document.getElementById('backend-selector');
         const oobaboogaEndpointContainer = document.getElementById('oobabooga-endpoint-container');
         const oobaboogaEndpointInput = document.getElementById('oobabooga-endpoint');
+        const testOobaboogaConnectionBtn = document.getElementById('test-oobabooga-connection-btn');
+        const oobaboogaConnectionStatus = document.getElementById('oobabooga-connection-status');
 
         // Master Toggle IDs and their corresponding container IDs
         const masterToggleConfig = [
@@ -2886,6 +2890,52 @@ Suggested Topics:`;
             }
             saveUIState(); // Save state when backend changes
         });
+
+        async function testOobaboogaConnection() {
+            if (!oobaboogaEndpointInput || !oobaboogaConnectionStatus) return;
+
+            let baseUrl = oobaboogaEndpointInput.value.trim();
+            if (!baseUrl) {
+                oobaboogaConnectionStatus.textContent = "Please enter an Oobabooga API endpoint.";
+                oobaboogaConnectionStatus.className = 'text-xs text-red-400 mt-1';
+                return;
+            }
+
+            // Attempt to derive base URL if /api/v1/generate or similar is present
+            if (baseUrl.includes("/api/")) {
+                baseUrl = baseUrl.substring(0, baseUrl.indexOf("/api/"));
+            }
+            if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+                oobaboogaConnectionStatus.textContent = "Endpoint must start with http:// or https://";
+                oobaboogaConnectionStatus.className = 'text-xs text-red-400 mt-1';
+                return;
+            }
+
+            const modelApiUrl = `${baseUrl}/api/v1/model`;
+
+            oobaboogaConnectionStatus.textContent = "Testing connection...";
+            oobaboogaConnectionStatus.className = 'text-xs text-slate-400 mt-1'; // Reset to default color
+
+            try {
+                const response = await fetch(modelApiUrl, { method: 'GET' });
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                }
+                const result = await response.json();
+
+                // Common paths for model name in Oobabooga's /api/v1/model response
+                const modelName = result.result?.model_name || result.model_name || result.result?.shared?.model_name || result.shared?.model_name || "Unknown model";
+
+                oobaboogaConnectionStatus.textContent = `Connected! Model: ${modelName}`;
+                oobaboogaConnectionStatus.className = 'text-xs text-green-400 mt-1';
+            } catch (error) {
+                console.error("Error testing Oobabooga connection:", error);
+                oobaboogaConnectionStatus.textContent = `Connection failed: ${error.message}. Check endpoint or server.`;
+                oobaboogaConnectionStatus.className = 'text-xs text-red-400 mt-1';
+            }
+        }
+
+        if(testOobaboogaConnectionBtn) testOobaboogaConnectionBtn.addEventListener('click', testOobaboogaConnection);
 
 
         // --- INITIALIZE UI ---

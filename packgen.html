@@ -1058,7 +1058,20 @@
 <div class="tab-panel" id="tab-advanced">
 <!-- More Advanced Settings -->
 <div class="mb-3">
-<label class="block text-xs text-slate-400 mb-1" for="humor-algorithm-mode">Humor Algorithm Mode:</label>
+<label class="block text-xs text-slate-400 mb-1" for="backend-selector">Generation Backend:</label>
+<select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="backend-selector">
+<option value="gemini" selected>Gemini (Default)</option>
+<option value="oobabooga">Oobabooga</option>
+</select>
+</div>
+
+<div class="mb-3 hidden" id="oobabooga-endpoint-container">
+<label class="block text-xs text-slate-400 mb-1" for="oobabooga-endpoint">Oobabooga API Endpoint:</label>
+<input type="text" id="oobabooga-endpoint" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" placeholder="e.g., http://localhost:5000/api/v1/generate"/>
+</div>
+
+<div class="mb-3">
+<label class="block text-xs text-slate-400 mb-1" for="humor-algorithm-mode">Humor Algorithm Mode (Gemini Only):</label>
 <select class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" id="humor-algorithm-mode">
 <option value="default" selected>Default Model</option>
 <option value="experimental">Experimental Mode</option>
@@ -1074,7 +1087,7 @@
 
 <!-- Master Toggle for Experimental API Tuning -->
 <div class="mb-3 flex items-center justify-between gap-3 p-2 rounded-md bg-slate-800/50">
-    <label class="text-sm cursor-pointer select-none" for="enableExperimentalApiTuningToggle">Enable Experimental API Tuning</label>
+    <label class="text-sm cursor-pointer select-none" for="enableExperimentalApiTuningToggle">Enable Experimental API Tuning (Gemini Only)</label>
     <label class="switch"><input id="enableExperimentalApiTuningToggle" type="checkbox"/><span class="slider round"></span></label>
 </div>
 <div id="experimentalApiTuningContainer" class="pl-4 border-l-2 border-slate-700/50 ml-2">
@@ -1325,6 +1338,11 @@
         const themeColorPicker = document.getElementById('theme-color-picker');
         const hotkeysBtn = document.getElementById('hotkeys-btn');
         const faqBtn = document.getElementById('faq-btn');
+
+        // Backend selector elements
+        const backendSelector = document.getElementById('backend-selector');
+        const oobaboogaEndpointContainer = document.getElementById('oobabooga-endpoint-container');
+        const oobaboogaEndpointInput = document.getElementById('oobabooga-endpoint');
 
         // Master Toggle IDs and their corresponding container IDs
         const masterToggleConfig = [
@@ -1701,6 +1719,8 @@
             const { mode = 'single', referenceJoke = null, absurdityLevel = 5, isLocked = false } = params;
             const activePovBtn = povSelector.querySelector('.toggle-btn.active');
             const pov = activePovBtn ? activePovBtn.dataset.pov : 'second';
+            const selectedBackend = backendSelector.value;
+            const oobaboogaEndpoint = oobaboogaEndpointInput.value.trim();
 
             const povInstructions = {
                 second: '- **Point of View:** Second-person direct address (e.g., "You are...", "yo...").',
@@ -1899,57 +1919,106 @@ ${configBlock}
 
 Based on ALL of the above, generate the joke now.`;
 
-            const apiKey = "AIzaSyANbsVl-HTscsB4ufQhQEztJEeDVQHVy0E"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ role: "user", parts: [{ text: prompt }] }],
-                generationConfig: { 
-                    temperature: 1.0, 
-                    topP: 0.95,
-                    thinkingConfig: { thinkingBudget: 0 } // This line was causing the error - REMOVED
-                },
-                safetySettings: [
-                    {
-                        category: "HARM_CATEGORY_HARASSMENT",
-                        threshold: "BLOCK_NONE"
-                    },
-                    {
-                        category: "HARM_CATEGORY_HATE_SPEECH",
-                        threshold: "BLOCK_NONE"
-                    },
-                    {
-                        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                        threshold: "BLOCK_NONE"
-                    },
-                    {
-                        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                        threshold: "BLOCK_NONE"
-                    }
-                ]
-            };
-            
-            try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
-                const result = await response.json();
+            if (selectedBackend === 'oobabooga') {
+                if (!oobaboogaEndpoint) {
+                    return "Oobabooga API endpoint is not set. Please configure it in the Advanced tab.";
+                }
+                const oogaPayload = {
+                    'prompt': prompt,
+                    'max_new_tokens': parseInt(params.maxWords) || 150,
+                    'temperature': (parseFloat(params.creativityLevel) / 5 * 1.0 + 0.2) + (parseFloat(absurdityLevel) / 10 * 0.5), // Combined creativity and absurdity
+                    'top_p': 0.9,
+                    'typical_p': 1,
+                    'repetition_penalty': params.avoidRepetition ? 1.18 : 1.1, // Higher penalty if avoidRepetition is checked
+                    'encoder_repetition_penalty': 1.0,
+                    'top_k': 0,
+                    'min_length': parseInt(params.minWords) || 10,
+                    'no_repeat_ngram_size': params.avoidRepetition ? 4 : 0, // Set n-gram size if avoidRepetition is checked
+                    'num_beams': 1,
+                    'penalty_alpha': 0,
+                    'length_penalty': 1,
+                    'early_stopping': false,
+                    'seed': params.generationSeed ? parseInt(params.generationSeed) : -1, // Use generation seed if provided
+                    'stopping_strings': ["\n\n", "###", "USER:", "ASSISTANT:"] // Added more common stop strings
+                };
 
-                if (result.candidates && result.candidates[0] && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts[0]) {
-                     let jokeText = result.candidates[0].content.parts[0].text.trim().replace(/^- /, '');
-                    jokeText = jokeText.replace(/^"|"$/g, ''); 
-                    jokeText = jokeText.replace(/^(here's your joke:|joke:|new joke:)/i, '').trim();
-                    return jokeText;
+                try {
+                    const response = await fetch(oobaboogaEndpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(oogaPayload)
+                    });
+                    if (!response.ok) throw new Error(`Oobabooga API error: ${response.status} ${response.statusText}`);
+                    const result = await response.json();
+
+                    // Assuming the response structure is like: { "results": [{ "text": "Generated joke here" }] }
+                    if (result.results && result.results[0] && result.results[0].text) {
+                        let jokeText = result.results[0].text.trim().replace(/^- /, '');
+                        jokeText = jokeText.replace(/^"|"$/g, '');
+                        jokeText = jokeText.replace(/^(here's your joke:|joke:|new joke:)/i, '').trim();
+                        // Remove the input prompt from the beginning of the output if present
+                        if (jokeText.startsWith(prompt)) {
+                            jokeText = jokeText.substring(prompt.length).trim();
+                        }
+                        // Sometimes Ooba returns the prompt and then the generation.
+                        // A simple way to try and get just the generation is to split by a common delimiter it might use
+                        // or look for text after the core of the prompt.
+                        // This is a heuristic and might need refinement.
+                        const promptEndMarker = "Based on ALL of the above, generate the joke now.";
+                        const markerIndex = jokeText.indexOf(promptEndMarker);
+                        if (markerIndex !== -1) {
+                            jokeText = jokeText.substring(markerIndex + promptEndMarker.length).trim();
+                        }
+                         // Further cleaning if the joke starts with a hyphen or quote after the prompt removal
+                        jokeText = jokeText.replace(/^- /, '').replace(/^"/, '').replace(/"$/, '');
+                        return jokeText;
+                    }
+                    return "Oobabooga API returned an unexpected response structure.";
+                } catch (error) {
+                    console.error("Error fetching from Oobabooga API:", error);
+                    return `Failed to generate joke from Oobabooga: ${error.message}. Check console.`;
                 }
-                if (result.candidates && result.candidates[0] && result.candidates[0].finishReason === 'SAFETY') {
-                    return "AI safety filters blocked this one. Try again.";
+
+            } else { // Gemini (default)
+                const apiKey = "AIzaSyANbsVl-HTscsB4ufQhQEztJEeDVQHVy0E";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        temperature: 1.0,
+                        topP: 0.95,
+                    },
+                    safetySettings: [
+                        { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                        { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+                    ]
+                };
+
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates[0] && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts[0]) {
+                         let jokeText = result.candidates[0].content.parts[0].text.trim().replace(/^- /, '');
+                        jokeText = jokeText.replace(/^"|"$/g, '');
+                        jokeText = jokeText.replace(/^(here's your joke:|joke:|new joke:)/i, '').trim();
+                        return jokeText;
+                    }
+                    if (result.candidates && result.candidates[0] && result.candidates[0].finishReason === 'SAFETY') {
+                        return "AI safety filters blocked this one. Try again.";
+                    }
+                    if (result.promptFeedback && result.promptFeedback.blockReason) {
+                         return `Blocked: ${result.promptFeedback.blockReason}. Try adjusting your prompt.`;
+                    }
+                    return "AI returned an unexpected response structure.";
+                } catch (error) {
+                    console.error("Error fetching from Gemini API:", error);
+                    return "Failed to generate joke. Check console.";
                 }
-                if (result.promptFeedback && result.promptFeedback.blockReason) {
-                     return `Blocked: ${result.promptFeedback.blockReason}. Try adjusting your prompt.`;
-                }
-                return "AI returned an unexpected response structure.";
-            } catch (error) {
-                console.error("Error fetching from Gemini API:", error);
-                return "Failed to generate joke. Check console.";
             }
         }
 
@@ -1959,7 +2028,7 @@ Based on ALL of the above, generate the joke now.`;
 
 Suggested Topics:`;
             
-            const apiKey = "";
+            const apiKey = ""; // This API key is for Gemini, aiSuggestTopics should probably also use the selected backend or stick to Gemini
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ role: "user", parts: [{ text: prompt }] }],
@@ -2381,6 +2450,7 @@ Suggested Topics:`;
                 { id: 'constraint-clear-subject', type: 'checked' },
                 
                 // Advanced Tab - Always Visible Controls
+                { id: 'backend-selector', type: 'value' }, { id: 'oobabooga-endpoint', type: 'value'},
                 { id: 'humor-algorithm-mode', type: 'value' }, { id: 'theme-color-picker', type: 'value' },
                 { id: 'inspirational-source', type: 'value' },
 
@@ -2492,6 +2562,10 @@ Suggested Topics:`;
                         targetBtn.classList.add('active');
                         document.getElementById(state.activeTab).classList.add('active');
                     }
+                }
+                // After loading all states, trigger change on backendSelector to update UI dependent on it
+                if (backendSelector) {
+                    backendSelector.dispatchEvent(new Event('change'));
                 }
             }
         }
@@ -2778,6 +2852,39 @@ Suggested Topics:`;
         if(faqBtn) faqBtn.addEventListener('click', () => { 
             faqModal.classList.remove('hidden');
             faqModal.classList.add('visible');
+        });
+
+        if(backendSelector) backendSelector.addEventListener('change', (e) => {
+            const selectedBackend = e.target.value;
+            if (selectedBackend === 'oobabooga') {
+                oobaboogaEndpointContainer.classList.remove('hidden');
+                // Disable Gemini-specific controls
+                document.getElementById('humor-algorithm-mode').disabled = true;
+                document.getElementById('enableExperimentalApiTuningToggle').disabled = true;
+                // If experimental tuning is enabled, disable its children too
+                const expTuningToggle = document.getElementById('enableExperimentalApiTuningToggle');
+                const expTuningContainer = document.getElementById('experimentalApiTuningContainer');
+                if (expTuningToggle.checked) { // Keep existing logic for toggling children
+                    // setControlsDisabled(expTuningContainer.id, masterToggleConfig.find(c => c.toggleId === expTuningToggle.id)?.childControlIds || [], true);
+                }
+                 expTuningContainer.style.opacity = 0.5; // Visually indicate disabled
+                 document.querySelector('label[for="humor-algorithm-mode"]').style.opacity = 0.5;
+                 document.querySelector('label[for="enableExperimentalApiTuningToggle"]').style.opacity = 0.5;
+
+
+            } else { // Gemini selected
+                oobaboogaEndpointContainer.classList.add('hidden');
+                // Enable Gemini-specific controls
+                document.getElementById('humor-algorithm-mode').disabled = false;
+                document.getElementById('enableExperimentalApiTuningToggle').disabled = false;
+                const expTuningToggle = document.getElementById('enableExperimentalApiTuningToggle');
+                const expTuningContainer = document.getElementById('experimentalApiTuningContainer');
+                // setControlsDisabled(expTuningContainer.id, masterToggleConfig.find(c => c.toggleId === expTuningToggle.id)?.childControlIds || [], !expTuningToggle.checked);
+                expTuningContainer.style.opacity = expTuningToggle.checked ? 1 : 0.5; // Restore opacity based on toggle
+                document.querySelector('label[for="humor-algorithm-mode"]').style.opacity = 1;
+                document.querySelector('label[for="enableExperimentalApiTuningToggle"]').style.opacity = 1;
+            }
+            saveUIState(); // Save state when backend changes
         });
 
 

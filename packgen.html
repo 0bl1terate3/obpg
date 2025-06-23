@@ -982,6 +982,71 @@
         <label class="block text-xs text-slate-400 mb-1" for="excluded-words">Excluded Words:</label>
         <textarea class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" id="excluded-words" placeholder="Specific words to exclude" rows="2" disabled></textarea>
     </div>
+
+    <!-- Added Missing Elements -->
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="min-words">Min Words:</label>
+        <input type="number" id="min-words" value="5" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="max-words">Max Words:</label>
+        <input type="number" id="max-words" value="20" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="complexity-level">
+            Complexity Level: <span class="font-bold text-cyan-400" id="complexity-value">Medium</span>
+        </label>
+        <input type="range" id="complexity-level" min="1" max="10" value="5" class="w-full slider-thumb" disabled>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="joke-tone">Joke Tone:</label>
+        <select id="joke-tone" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled>
+            <option value="any" selected>Any</option>
+            <option value="sarcastic">Sarcastic</option>
+            <option value="playful">Playful</option>
+            <option value="dark">Dark</option>
+            <option value="witty">Witty</option>
+            <option value="absurd">Absurd</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="humor-type">Humor Type:</label>
+        <select id="humor-type" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled>
+            <option value="any" selected>Any</option>
+            <option value="observational">Observational</option>
+            <option value="surreal">Surreal</option>
+            <option value="wordplay">Wordplay</option>
+            <option value="self-deprecating">Self-deprecating</option>
+            <option value="roast">Roast</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="slang-level-slider">
+            Slang Level: <span class="font-bold text-cyan-400" id="slang-level-value">Normal</span>
+        </label>
+        <input type="range" id="slang-level-slider" min="1" max="5" value="3" class="w-full slider-thumb" disabled>
+    </div>
+     <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="joke-structure">Joke Structure:</label>
+        <select id="joke-structure" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" disabled>
+            <option value="any" selected>Any</option>
+            <option value="one-liner">One-liner</option>
+            <option value="question-answer">Question/Answer</option>
+            <option value="story-punchline">Story with Punchline</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="scenario-list">Scenario List (one per line):</label>
+        <textarea id="scenario-list" rows="3" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs focus:ring-cyan-500 focus:border-cyan-500" placeholder="e.g., At a funeral&#10;During a job interview" disabled></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="block text-xs text-slate-400 mb-1" for="current-scenario">Current Scenario:</label>
+        <div class="flex gap-2">
+            <input type="text" id="current-scenario" class="bg-slate-800 border border-slate-600 rounded p-1 w-full text-xs" placeholder="Auto-selected or type here" disabled>
+            <button id="random-scenario-btn" class="toggle-btn !text-xs !py-1 !w-auto px-3" disabled>Random</button>
+            <button id="clear-scenario-btn" class="toggle-btn !text-xs !py-1 !w-auto px-3" disabled>Clear</button>
+        </div>
+    </div>
 </div>
 
 <div class="animated-divider"></div> <!-- Animated Divider -->
@@ -1236,10 +1301,7 @@
         const addTopicBtn = document.getElementById('add-topic-btn');
         const guaranteedWordsInput = document.getElementById('guaranteed-words');
         const startsWithTextarea = document.getElementById('starts-with');
-        const scenarioListTextarea = document.getElementById('scenario-list');
-        const currentScenarioInput = document.getElementById('current-scenario');
-        const randomScenarioBtn = document.getElementById('random-scenario-btn');
-        const clearScenarioBtn = document.getElementById('clear-scenario-btn');
+        // scenarioListTextarea, currentScenarioInput, randomScenarioBtn, clearScenarioBtn are now initialized in DOMContentLoaded
         const culturalContextTextarea = document.getElementById('cultural-context');
         const inspirationalSourceTextarea = document.getElementById('inspirational-source'); 
         const forbiddenConstraintsTextarea = document.getElementById('forbidden-constraints');
@@ -1363,9 +1425,14 @@
         const enableExperimentalApiTuningToggle = document.getElementById('enableExperimentalApiTuningToggle');
         const entropyBiasSlider = document.getElementById('entropy-bias');
         // Ensure these are initialized correctly within DOMContentLoaded
-        let shockValueSliderInstance;
-        let shockValueLabelInstance;
-        let entropyBiasSliderInstance;
+        let shockValueSlider; // Renamed from shockValueSliderInstance
+        let shockValueLabel;  // Renamed from shockValueLabelInstance
+        let entropyBiasSliderInstance; // This one can remain as is if only used locally in DOMContentLoaded
+
+        // Newly added element variables - to be initialized in DOMContentLoaded
+        let minWordsInput, maxWordsInput, complexityLevelSlider, complexityValueSpan,
+            jokeToneSelect, humorTypeSelect, slangLevelSlider, slangLevelValueSpan,
+            scenarioListTextarea, currentScenarioInput, randomScenarioBtn, clearScenarioBtn, jokeStructureSelect;
 
 
         // New Topics Tab elements
@@ -1832,9 +1899,8 @@ Based on ALL of the above, generate the joke now.`;
                 contents: [{ role: "user", parts: [{ text: prompt }] }],
                 generationConfig: { 
                     temperature: 1.0, 
-                    topP: 0.95,
-                thinkingConfig: { thinkingBudget: 0 } // This line was causing the error
-  
+                    topP: 0.95
+                    // thinkingConfig: { thinkingBudget: 0 } // This line was causing the error - REMOVED
                 },
                 safetySettings: [
                     {
@@ -2235,7 +2301,6 @@ Suggested Topics:`;
         function populatePersistentInputs() {
             // This function defines which UI elements' states should be saved and loaded.
             // It's crucial that IDs here match exactly with the HTML element IDs.
-            // We'll build the list dynamically, checking for element existence.
             const elementsToPersist = [
                 // Generation Tab - Always Visible Controls
                 { id: 'timing-slider', type: 'value' }, { id: 'verbosity-style', type: 'value' },
@@ -2283,15 +2348,25 @@ Suggested Topics:`;
                 { id: 'enableNarrativeControlToggle', type: 'checked' }, { id: 'enableLinguisticStyleToggle', type: 'checked' },
                 { id: 'enableAdvancedContentInputsToggle', type: 'checked' },
                 
+                // Content Tab - Newly Added Elements (now part of advancedContentInputsContainer or similar)
+                { id: 'min-words', type: 'value' }, { id: 'max-words', type: 'value' },
+                { id: 'complexity-level', type: 'value' }, { id: 'joke-tone', type: 'value' },
+                { id: 'humor-type', type: 'value' }, { id: 'slang-level-slider', type: 'value' },
+                { id: 'scenario-list', type: 'value' }, { id: 'current-scenario', type: 'value' },
+                { id: 'joke-structure', type: 'value' },
+
                 // Content Tab - Narrative & Structural Controls (Child of enableNarrativeControlToggle)
                 { id: 'narrative-structure', type: 'value' }, { id: 'punchline-style', type: 'value' },
-                { id: 'sentence-structure', type: 'value' },
+                // { id: 'sentence-structure', type: 'value' }, // This was likely a duplicate of joke-structure or a misnamed ID.
+                                                              // If 'sentence-structure' is a distinct element, it needs to be added to HTML and here.
+                                                              // Assuming 'joke-structure' covers the intent for now.
 
                 // Content Tab - Linguistic Style Controls (Child of enableLinguisticStyleToggle)
                 { id: 'pos-emphasize-adjectives', type: 'checked' }, { id: 'pos-minimize-adverbs', type: 'checked' },
                 { id: 'pos-ensure-strong-verbs', type: 'checked' },
 
                 // Content Tab - Specific Content Inputs & Constraints (Child of enableAdvancedContentInputsToggle)
+                // These were already here and should be fine.
                 { id: 'guaranteed-words', type: 'value' }, { id: 'starts-with', type: 'value' },
                 { id: 'cultural-context', type: 'value' }, { id: 'narrator-persona', type: 'value' },
                 { id: 'target-audience', type: 'value' }, { id: 'forbidden-constraints', type: 'value' },
@@ -2310,20 +2385,16 @@ Suggested Topics:`;
             ];
 
             // Filter out elements that are not found in the DOM at this point
+            // This check is important because if an ID is listed here but not in HTML, `saveUIState` and `loadUIState` will fail.
             persistentInputs = elementsToPersist.filter(item => {
                 if (document.getElementById(item.id)) {
                     return true;
                 } else {
-                    // Log a warning here if an element is truly missing from the HTML structure
-                    // This is different from the warning in saveUIState, which checks at save time.
                     console.warn(`Element with ID '${item.id}' not found in DOM during populatePersistentInputs. It will not be persisted.`);
                     return false;
                 }
             });
         }
-
-
-
 
         function saveUIState() {
             const state = {};
@@ -2754,11 +2825,11 @@ Suggested Topics:`;
                 jokeTone: jokeToneSelect?.value,
                 humorType: humorTypeSelect?.value,
                 jokeStructure: jokeStructureSelect?.value, // This was in Content, but seems general enough
-                slangLevel: slangLevelSlider?.value,
+                slangLevel: slangLevelSlider?.value, // This now refers to the globally initialized variable
                 detailLevel: detailLevelSlider?.value,
                 avoidRepetition: avoidRepetitionToggle?.checked,
                 inspirationalSource: inspirationalSourceTextarea?.value.trim(),
-                humorAlgorithmMode: verbosityStyleSelect?.value, // Assuming verbosityStyleSelect is the correct element for this
+                humorAlgorithmMode: document.getElementById('humor-algorithm-mode')?.value, // Corrected reference
 
                 // --- Parameters conditional on Master Toggles ---
 
@@ -2832,7 +2903,7 @@ Suggested Topics:`;
                 generationParams.sentenceRhythm = sentenceRhythmSelect?.value;
                 generationParams.backstory = backstoryInjectionTextarea?.value.trim();
                 generationParams.emotionArc = emotionArcSelect?.value;
-                generationParams.shockValue = shockValueSlider?.value;
+                generationParams.shockValue = shockValueSlider?.value; // Uses the corrected global shockValueSlider
                 generationParams.callbackCount = callbackCountInput?.value;
                 generationParams.conflictType = conflictTypeSelect?.value;
                 generationParams.generationSeed = generationSeedInput?.value.trim();
@@ -3273,79 +3344,135 @@ Suggested Topics:`;
         // --- BOOT UP ANIMATION ---
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize shockValueSlider and shockValueLabel here
-            shockValueSliderInstance = document.getElementById('shock-value');
-            shockValueLabelInstance = document.getElementById('shock-value-label');
-            initializeUI();
+            shockValueSlider = document.getElementById('shock-value'); // Renamed
+            shockValueLabel = document.getElementById('shock-value-label'); // Renamed
+
+            // Initialize newly added element variables
+            minWordsInput = document.getElementById('min-words');
+            maxWordsInput = document.getElementById('max-words');
+            complexityLevelSlider = document.getElementById('complexity-level');
+            complexityValueSpan = document.getElementById('complexity-value');
+            jokeToneSelect = document.getElementById('joke-tone');
+            humorTypeSelect = document.getElementById('humor-type');
+            slangLevelSlider = document.getElementById('slang-level-slider');
+            slangLevelValueSpan = document.getElementById('slang-level-value');
+            scenarioListTextarea = document.getElementById('scenario-list');
+            currentScenarioInput = document.getElementById('current-scenario');
+            randomScenarioBtn = document.getElementById('random-scenario-btn');
+            clearScenarioBtn = document.getElementById('clear-scenario-btn');
+            jokeStructureSelect = document.getElementById('joke-structure');
+
+            // Initialize other sliders that might have been missed for global vars if needed by event handlers outside this scope
+            entropyBiasSliderInstance = document.getElementById('entropy-bias'); // Example if it was needed globally
+
+            initializeUI(); // This will call populatePersistentInputs among other things
             init3D();
             animate3D();
+
+            // --- New Feature Bindings (Moved inside DOMContentLoaded for proper initialization) ---
+            if (shockValueSlider && shockValueLabel) {
+                shockValueSlider.addEventListener('input', () => {
+                    shockValueLabel.textContent = shockValueSlider.value;
+                });
+            } else {
+                console.warn("Shock value slider or label not found for event listener setup.");
+            }
+
+            // Add event listeners for new scenario buttons if they exist
+            if(randomScenarioBtn) randomScenarioBtn.addEventListener('click', () => {
+                const scenarios = scenarioListTextarea.value.split('\n').map(s => s.trim()).filter(s => s);
+                if (scenarios.length > 0) {
+                    currentScenarioInput.value = scenarios[Math.floor(Math.random() * scenarios.length)];
+                    saveUIState();
+                }
+            });
+
+            if(clearScenarioBtn) clearScenarioBtn.addEventListener('click', () => {
+                currentScenarioInput.value = '';
+                saveUIState();
+            });
+
+            // Add event listeners for new sliders' value displays
+            if(complexityLevelSlider && complexityValueSpan) {
+                complexityLevelSlider.addEventListener('input', updateComplexityValueDisplay);
+            }
+            if(slangLevelSlider && slangLevelValueSpan) {
+                slangLevelSlider.addEventListener('input', updateSlangLevelDisplay);
+            }
+             // Re-bind existing event listeners that might have been affected by variable renaming or DOM structure changes
+            // This is important if any of the global variables they use were among those just initialized here.
+            // For example, if absurditySlider was initialized here, its event listener should be re-checked or re-added.
+            // However, most listeners are added to elements directly by ID, so this might not be an issue for many.
+            // It's good practice to ensure all dynamic elements have their listeners correctly attached after DOM is ready.
+
         });
     
 
 // Extend generation logic to include new controls
-function getGenerationConfig() {
-    return {
+function getGenerationConfig() { // This function seems to be for debugging or a simplified config
+    const config = {
         pov: document.querySelector('#pov-selector .toggle-btn.active')?.dataset?.pov || 'second',
         mode: document.querySelector('#mode-selector .toggle-btn.active')?.dataset?.mode || 'single',
-        absurdity: +absurditySlider.value,
+        absurdity: +absurditySlider.value, // absurditySlider should be fine as it's an existing global
         detailLevel: +document.getElementById('detail-level-slider').value,
         creativityLevel: +document.getElementById('creativity-level-slider').value,
         avoidRepetition: document.getElementById('avoid-repetition-toggle').checked,
         jokeLength: +document.getElementById('joke-length-slider').value,
         timing: +document.getElementById('timing-slider').value,
         verbosityStyle: document.getElementById('verbosity-style').value,
-        // New Fine-Tuning Parameters
         sarcasmLevel: +document.getElementById('sarcasm-level-slider').value,
         realismSurrealism: document.getElementById('realism-vs-surrealism').value,
         visualImagery: +document.getElementById('visual-imagery-slider').value,
         logicalCoherence: document.getElementById('logical-coherence-toggle').value,
         exaggerationMode: document.getElementById('exaggeration-mode').value,
     };
+    // Add new controls from Content Tab
+    if (minWordsInput) config.minWords = +minWordsInput.value;
+    if (maxWordsInput) config.maxWords = +maxWordsInput.value;
+    if (complexityLevelSlider) config.complexityLevel = +complexityLevelSlider.value;
+    if (jokeToneSelect) config.jokeTone = jokeToneSelect.value;
+    if (humorTypeSelect) config.humorType = humorTypeSelect.value;
+    if (slangLevelSlider) config.slangLevel = +slangLevelSlider.value;
+    if (jokeStructureSelect) config.jokeStructure = jokeStructureSelect.value;
+    if (scenarioListTextarea) config.scenarioList = scenarioListTextarea.value; // Might not be directly used in prompt but good for logging
+    if (currentScenarioInput) config.currentScenario = currentScenarioInput.value;
+
+
+    return config;
 }
 
 // Hook into Generate button for debug preview
-generateBtn.addEventListener('click', () => {
-    const config = getGenerationConfig();
-    console.log("🚀 Generation Config:", config);
+// generateBtn.addEventListener('click', () => { // This listener seems to be duplicated, one can be removed or merged
+//     const config = getGenerationConfig();
+//     console.log("🚀 Generation Config (from getGenerationConfig):", config);
+//     // Example generation call placeholder - this might conflict with the main handleGenerate logic
+//     // jokeDisplayTextElement.textContent = "Generating with config: " + JSON.stringify(config, null, 2);
+// });
 
-    // Example generation call placeholder
-    jokeDisplayTextElement.textContent = "Generating with config: " + JSON.stringify(config, null, 2);
-});
-
-
-// --- New Feature Bindings (Moved inside DOMContentLoaded for proper initialization) ---
-if (shockValueSliderInstance && shockValueLabelInstance) {
-    shockValueSliderInstance.addEventListener('input', () => {
-        shockValueLabelInstance.textContent = shockValueSliderInstance.value;
-    });
-} else {
-    console.warn("Shock value slider or label not found for event listener setup.");
-}
 
 // Example integration object builder (can be sent to server)
-function collectNewGenerationSettings() {
-const settings = {
-            themeRandomizer: document.getElementById('theme-randomizer-toggle').checked,
+function collectNewGenerationSettings() { // This function also seems for debugging or a specific part of settings
+    const settings = {
+        themeRandomizer: document.getElementById('theme-randomizer-toggle').checked,
         preferredNounCount: parseInt(document.getElementById('noun-count').value),
         verbDensity: parseInt(document.getElementById('verb-density').value),
         sentenceRhythm: document.getElementById('sentence-rhythm').value,
         backstory: document.getElementById('backstory-injection').value.trim(),
         emotionArc: document.getElementById('emotion-arc').value,
-        shockValue: parseInt(document.getElementById('shock-value').value),
+        shockValue: shockValueSlider ? parseInt(shockValueSlider.value) : 3, // Use the corrected shockValueSlider
         callbackCount: parseInt(document.getElementById('callback-count').value),
         conflictType: document.getElementById('conflict-type').value
     };
-    // Add generationSeed if it exists and has a value
-    if (document.getElementById('generation-seed')) {        generationSeed: document.getElementById('generation-seed').value.trim()
-    };
+    const genSeedEl = document.getElementById('generation-seed');
+    if (genSeedEl) { settings.generationSeed = genSeedEl.value.trim(); }
+    return settings;
 }
 
 // Hook into main generation button (can be sent to server or model)
-generateBtn.addEventListener('click', () => {
-    const extraSettings = collectNewGenerationSettings();
-    console.log("Sending all settings to server:", extraSettings);
-    // Optionally merge with other config and POST to server
-    // fetch('/api/generate', { method: 'POST', body: JSON.stringify({ ...otherSettings, ...extraSettings }) })
-});
+// generateBtn.addEventListener('click', () => { // This is another duplicate listener for generateBtn
+//     const extraSettings = collectNewGenerationSettings();
+//     console.log("Sending all settings to server (from collectNewGenerationSettings):", extraSettings);
+// });
 
 </script>
 </body>
